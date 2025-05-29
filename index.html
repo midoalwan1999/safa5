@@ -74,17 +74,17 @@
         }
 
         /* Responsive adjustments for RTL/LTR */
-        [dir="rtl"] .text-right { text-align: right; }
-        [dir="rtl"] .mr-3 { margin-right: 0.75rem; margin-left: 0; }
-        [dir="rtl"] .ml-2 { margin-left: 0.5rem; margin-right: 0; }
-        [dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+        .text-right { text-align: right; }
+        .mr-3 { margin-right: 0.75rem; margin-left: 0; }
+        .ml-2 { margin-left: 0.5rem; margin-right: 0; }
+        .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
             --tw-space-x-reverse: 1;
         }
 
-        [dir="ltr"] .text-right { text-align: left; }
-        [dir="ltr"] .mr-3 { margin-left: 0.75rem; margin-right: 0; }
-        [dir="ltr"] .ml-2 { margin-right: 0.5rem; margin-left: 0; }
-        [dir="ltr"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+        .text-left { text-align: left; }
+        .ml-3 { margin-left: 0.75rem; margin-right: 0; }
+        .mr-2 { margin-right: 0.5rem; margin-left: 0; }
+        .space-x > :not([hidden]) ~ :not([hidden]) {
             --tw-space-x-reverse: 0;
         }
 
@@ -162,7 +162,7 @@
             transform: scale(1.1); /* Slightly enlarge on hover */
         }
         /* Adjust for LTR direction */
-        [dir="ltr"] .floating-whatsapp-button {
+        .ltr .floating-whatsapp-button {
             left: 20px;
             right: auto;
         }
@@ -183,7 +183,7 @@
             text-align: center;
         }
         /* Adjust for LTR direction */
-        [dir="ltr"] .price-tag {
+        .ltr .price-tag {
             left: 0.75rem;
             right: auto;
         }
@@ -220,7 +220,7 @@
             text-decoration: none; /* Remove underline from links */
         }
         /* Adjust icon margin for LTR */
-        [dir="ltr"] .contact-info-item i {
+        .ltr .contact-info-item i {
             margin-right: 1rem;
             margin-left: 0;
         }
@@ -313,7 +313,7 @@
         }
         .ai-response p {
             margin-bottom: 1rem;
-            text-align: center; /* Centered for consistency as requested */
+            /* Removed text-align: center; to allow parent's text-align: right; to take effect */
         }
         .ai-response strong {
             color: #0a1128;
@@ -329,12 +329,12 @@
         }
     </style>
 </head>
-<body>
+<body class="rtl">
     <header class="bg-white shadow-md py-4">
         <div class="container mx-auto flex items-center px-4 header-content">
             <div class="flex items-center flex-grow">
-                <img src="https://placehold.co/150x50/0A1128/FFFFFF?text=SafarGo+Logo" alt="شعار سفر جو" class="h-12 w-auto rounded-lg">
-                <span class="text-2xl font-bold text-blue-900 mr-3" id="company-name">سفر جو</span>
+                <img src="https://i.imgur.com/zRLFc0j_d.png?maxwidth=520&shape=thumb&fidelity=high" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0A1128/FFFFFF?text=SafarGo+Logo';" alt="SafarGo Logo" class="h-12 w-auto rounded-lg">
+                <span class="text-2xl font-bold text-blue-900 mr-3" id="company-name">Safar Go</span>
             </div>
 
             <button id="mobile-menu-button" class="mobile-menu-button text-blue-700 focus:outline-none">
@@ -345,6 +345,7 @@
                 <ul class="flex space-x-4 space-x-reverse md:flex-row">
                     <li><a href="#home" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="home">الرئيسية</a></li>
                     <li><a href="#destinations" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="destinations">الوجهات</a></li>
+                    <li><a href="#ai-planner" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="aiPlanner">مخطط الرحلات بالذكاء الاصطناعي</a></li>
                     <li><a href="#about" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="about">عنا</a></li>
                     <li><a href="#contact" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="contact">اتصل بنا</a></li>
                 </ul>
@@ -373,7 +374,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag" data-lang-key="parisPrice">تبدأ من 2800 درهم</div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=باريس" alt="صورة لبرج إيفل في باريس" class="card-image">
+                        <img src="https://images.pexels.com/photos/2344/cars-france-landmark-lights.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باريس';" alt="صورة لبرج إيفل في باريس" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="parisTitle">باريس، فرنسا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="parisDesc">مدينة النور والرومانسية، برج إيفل، قوس النصر، متحف اللوفر.</p>
                     </div>
@@ -388,7 +389,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=سوتشي" alt="صورة لحديقة سوتشي الأولمبية" class="card-image">
+                        <img src="https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=سوتشي';" alt="صورة لحديقة سوتشي الأولمبية" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="sochiTitle">سوتشي، روسيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="sochiDesc">مدينة ساحلية جميلة على البحر الأسود، تشتهر بمنتجعاتها وشواطئها وحديقتها الأولمبية.</p>
                     </div>
@@ -402,7 +403,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=روما" alt="صورة للكولوسيوم في روما" class="card-image">
+                        <img src="https://images.pexels.com/photos/2225443/pexels-photo-2225443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=روما';" alt="صورة للكولوسيوم في روما" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="romeTitle">روما، إيطاليا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="romeDesc">مدينة التاريخ العظيم، الكولوسيوم، الفاتيكان.</p>
                     </div>
@@ -416,7 +417,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=سانتوريني" alt="صورة لقرية أويا في سانتوريني" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1549476461-3444439c2d7f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=سانتوريني';" alt="صورة لقرية أويا في سانتوريني" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="santoriniTitle">سانتوريني، اليونان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="santoriniDesc">جزر خلابة، مناظر غروب الشمس الساحرة من قرية أويا.</p>
                     </div>
@@ -430,7 +431,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=لندن" alt="صورة لساعة بيج بن في لندن" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1505761671935-60453a29195e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=لندن';" alt="صورة لساعة بيج بن في لندن" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="londonTitle">لندن، المملكة المتحدة</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="londonDesc">مدينة ملكية نابضة بالحياة، بيج بن، قصر باكنغهام.</p>
                     </div>
@@ -444,7 +445,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=امستردام" alt="صورة لقنوات أمستردام" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1534351450181-ea940a4313f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=امستردام';" alt="صورة لقنوات أمستردام" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="amsterdamTitle">أمستردام، هولندا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="amsterdamDesc">قنوات جميلة، متاحف عالمية، ثقافة فريدة.</p>
                     </div>
@@ -462,7 +463,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag" data-lang-key="azerbaijanPrice">تبدأ من 1999 درهم</div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=باكو" alt="صورة لأبراج اللهب في باكو، أذربيجان" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1606558239088-77c8e9d6d5d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باكو';" alt="صورة لأبراج اللهب في باكو، أذربيجان" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="azerbaijanTitle">أذربيجان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="azerbaijanDesc">باكو: مدينة الأضواء، أبراج اللهب، المدينة القديمة.</p>
                     </div>
@@ -476,7 +477,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=ماليزيا" alt="صورة لأبراج بتروناس في ماليزيا" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1572072382755-668b8e0e7a4b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=ماليزيا';" alt="صورة لأبراج بتروناس في ماليزيا" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="malaysiaTitle">ماليزيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="malaysiaDesc">كوالا لامبور - بينانج - لنكاوي: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.</p>
                     </div>
@@ -490,7 +491,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=فيتنام" alt="صورة لخليج ها لونج في فيتنام" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=فيتنام';" alt="صورة لخليج ها لونج في فيتنام" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="vietnamTitle">فيتنام</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="vietnamDesc">هانوي - نينه بينه - سابا - خليج هالونغ: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.</p>
                     </div>
@@ -504,7 +505,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=كازاخستان" alt="صورة لمدينة ألماتي في كازاخستان" class="card-image">
+                        <img src="https://images.pexels.com/photos/29968179/pexels-photo-29968179/free-photo-of-hiker-enjoying-scenic-mountain-view-in-qusar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=كازاخستان';" alt="صورة لمدينة ألماتي في كازاخستان" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="kazakhstanTitle">كازاخستان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="kazakhstanDesc">الماتي: مواصلات، طيران مباشر، إفطار يومي، فنادق، جولات سياحية.</p>
                     </div>
@@ -518,7 +519,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=بالي" alt="صورة لمعبد تاناه لوط في بالي" class="card-image">
+                        <img src="https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=بالي';" alt="صورة لمعبد تاناه لوط في بالي" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="baliTitle">بالي، إندونيسيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="baliDesc">جنة استوائية، شواطئ، معابد، غابات.</p>
                     </div>
@@ -527,12 +528,16 @@
                             <i class="fab fa-whatsapp whatsapp-icon"></i>
                             تواصل عبر واتساب
                         </a>
-                    </a>
+                    </div>
                 </div>
+            </div>
+
+            <h3 class="text-2xl md:text-3xl font-semibold text-blue-800 mb-6 mt-12 text-center" data-lang-key="additionalDestinationsTitle">وجهات إضافية</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card bg-white p-6">
                     <div class="price-tag" data-lang-key="turkeyPrice">تبدأ من 1800 درهم</div>
                     <div class="card-content">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=اسطنبول" alt="صورة لآيا صوفيا في اسطنبول" class="card-image">
+                        <img src="https://images.pexels.com/photos/3214994/pexels-photo-3214994.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=اسطنبول';" alt="صورة لآيا صوفيا في اسطنبول" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="turkeyTitle">اسطنبول، تركيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="turkeyDesc">مزيج من الثقافات الشرقية والغربية، آيا صوفيا، البازار الكبير، البوسفور.</p>
                     </div>
@@ -554,15 +559,13 @@
             دع الذكاء الاصطناعي يقترح لك وجهة وأنشطة لا تُنسى.
         </p>
         <textarea id="ai-trip-input" placeholder="مثال: أرغب في رحلة استرخاء لمدة أسبوع، بميزانية متوسطة، وأحب الشواطئ والطبيعة الخلابة."></textarea>
-        <button id="ai-suggest-button">✨اقتراح رحلة✨</button>
-        <div id="loading-indicator" class="loading-indicator">جاري تجهيز رحلتك المثالية...</div>
+        <button id="ai-suggest-button" data-lang-key="aiSuggestButton">✨اقتراح رحلة✨</button>
+        <div id="loading-indicator" class="loading-indicator" data-lang-key="aiLoading">جاري تجهيز رحلتك المثالية...</div>
         <div id="ai-response-output" class="ai-response hidden">
-            <h3>اقتراح رحلتك من سفر جو:</h3>
+            <h3 data-lang-key="aiResponseHeading">اقتراح رحلتك من سفر جو:</h3>
             <p id="ai-response-text"></p>
-            <p class="text-sm text-gray-600 mt-4">
-                <span data-lang-key="aiContactPrompt">هل أعجبك الاقتراح؟ تواصل معنا عبر الواتساب الآن لتحويل هذه الرحلة إلى حقيقة!</span>
-                <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-            </p>
+            <p class="text-sm text-gray-600 mt-4" id="ai-contact-prompt-container">
+                </p>
         </div>
     </section>
 
@@ -603,8 +606,21 @@
     </section>
 
     <footer class="footer">
-        <div class="container mx-auto px-4">
-            <p class="text-sm" data-lang-key="copyright">&copy; 2024 سفر جو. جميع الحقوق محفوظة.</p>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-sm mb-4 md:mb-0" data-lang-key="copyright">&copy; 2024 سفر جو. جميع الحقوق محفوظة.</p>
+            <div class="flex space-x-4 space-x-reverse">
+                <a href="https://www.instagram.com/safar.trip?igsh=MTNuZ2ZqdW1qYzYyYQ%3D%3D&utm_source=qr"
+                   target="_blank" rel="noopener noreferrer"
+                   class="text-gray-400 hover:text-white transition duration-300 text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-2xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-2xl">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -619,6 +635,7 @@
                 destinations: 'الوجهات',
                 about: 'عنا',
                 contact: 'اتصل بنا',
+                aiPlanner: 'مخطط الرحلات بالذكاء الاصطناعي', // Updated navigation link text
                 heroTitle: 'اكتشف العالم مع سفر جو',
                 heroSubtitle: 'خطط لرحلتك المثالية معنا. مغامرات لا تُنسى في انتظارك!',
                 exploreButton: 'استكشف وجهاتنا',
@@ -650,6 +667,7 @@
                 turkeyTitle: 'اسطنبول، تركيا',
                 turkeyDesc: 'مزيج من الثقافات الشرقية والغربية، آيا صوفيا، البازار الكبير، البوسفور.',
                 turkeyPrice: 'تبدأ من 1800 درهم',
+                additionalDestinationsTitle: 'وجهات إضافية', // Added for the new section
                 aboutUsTitle: 'عن سفر جو',
                 aboutUsParagraph1: '"سفر جو" هي وكالة سفر رائدة مقرها الشارقة، الإمارات العربية المتحدة، متخصصة في تنظيم الرحلات السياحية المذهلة إلى أجمل الوجهات حول العالم. نحن نلتزم بتقديم تجارب سفر لا تُنسى، مع التركيز على الراحة، الفخامة، والخدمة الشخصية. فريقنا من الخبراء مستعد لمساعدتك في التخطيط لرحلتك القادمة، سواء كانت مغامرة فردية، عطلة عائلية، أو رحلة عمل.',
                 aboutUsParagraph2: 'نحن نؤمن بأن السفر يثري الروح ويوسع الآفاق، ولهذا نسعى جاهدين لتقديم باقات سفر متنوعة تلبي جميع الأذواق والميزانيات. انضم إلينا في رحلتك القادمة واكتشف جمال العالم مع "سفر جو"!',
@@ -671,13 +689,16 @@
                 aiLoading: 'جاري تجهيز رحلتك المثالية...',
                 aiResponseHeading: 'اقتراح رحلتك من سفر جو:',
                 aiContactPrompt: 'هل أعجبك الاقتراح؟ تواصل معنا عبر الواتساب الآن لتحويل هذه الرحلة إلى حقيقة!',
-                lowBudgetMessage: 'عذراً، سفر جو لا تتوفر لديها رحلات بهذه الميزانية. الرحلات تبدأ من 1400 درهم.'
+                lowBudgetMessage: 'عذراً، سفر جو لا تتوفر لديها رحلات بهذه الميزانية. الرحلات تبدأ من 1400 درهم.',
+                lowBudgetContactPrompt: 'تواصل معنا عبر الواتساب الآن لمعرفة العروض المتاحة التي تناسب ميزانيتك!', // New specific message for low budget
+                eidOfferCta: 'لا تفوت عروض العيد المميزة! تواصل معنا الآن للاستفادة من أفضل باقات السفر.' // New CTA
             },
             en: {
                 home: 'Home',
                 destinations: 'Destinations',
                 about: 'About Us',
                 contact: 'Contact Us',
+                aiPlanner: 'AI Trip Planner', // Updated navigation link text
                 heroTitle: 'Discover the World with SafarGo',
                 heroSubtitle: 'Plan your perfect trip with us. Unforgettable adventures await!',
                 exploreButton: 'Explore Our Destinations',
@@ -709,6 +730,7 @@
                 turkeyTitle: 'Istanbul, Turkey',
                 turkeyDesc: 'A mix of Eastern and Western cultures, Hagia Sophia, Grand Bazaar, Bosphorus.',
                 turkeyPrice: 'Starts from 1800 AED',
+                additionalDestinationsTitle: 'Additional Destinations', // Added for the new section
                 aboutUsTitle: 'About SafarGo',
                 aboutUsParagraph1: 'SafarGo is a leading travel agency based in Sharjah, UAE, specializing in organizing amazing tourist trips to the most beautiful destinations around the world. We are committed to providing unforgettable travel experiences, focusing on comfort, luxury, and personalized service. Our team of experts is ready to help you plan your next trip, whether it\'s a solo adventure, a family vacation, or a business trip.',
                 aboutUsParagraph2: 'We believe that travel enriches the soul and broadens horizons, which is why we strive to offer diverse travel packages that cater to all tastes and budgets. Join us on your next journey and discover the beauty of the world with "SafarGo"!',
@@ -730,7 +752,9 @@
                 aiLoading: 'Preparing your perfect trip...',
                 aiResponseHeading: 'Your Trip Suggestion from SafarGo:',
                 aiContactPrompt: 'Did you like the suggestion? Contact us via WhatsApp now to turn this trip into a reality!',
-                lowBudgetMessage: 'Sorry, SafarGo does not have trips available for this budget. Trips start from 1400 AED.'
+                lowBudgetMessage: 'Sorry, SafarGo does not have trips available for this budget. Trips start from 1400 AED.',
+                lowBudgetContactPrompt: 'Contact us via WhatsApp now to learn about available offers that suit your budget!', // New specific message for low budget
+                eidOfferCta: 'Don\'t miss out on special Eid offers! Contact us now to avail the best travel packages.' // New CTA
             }
         };
 
@@ -770,9 +794,8 @@
                 }
             });
 
-            // Update specific elements that need special handling (like image alt text or company name)
-            document.querySelector('img[alt^="شعار سفر جو"], img[alt^="SafarGo Logo"]').alt = (lang === 'ar') ? 'شعار سفر جو' : 'SafarGo Logo';
-            document.getElementById('company-name').textContent = (lang === 'ar') ? 'سفر جو' : 'SafarGo';
+            // The company name "Safar Go" is now static English and doesn't need translation logic here.
+            // document.getElementById('company-name').textContent = (lang === 'ar') ? 'سفر جو' : 'Safar Go';
 
             // Update dynamic prices
             updateDynamicPrices(lang);
@@ -812,11 +835,16 @@
         const loadingIndicator = document.getElementById('loading-indicator');
         const aiResponseOutput = document.getElementById('ai-response-output');
         const aiResponseText = document.getElementById('ai-response-text');
+        const aiContactPromptContainer = document.getElementById('ai-contact-prompt-container'); // Get the new container
 
         aiSuggestButton.addEventListener('click', async () => {
             const userInput = aiTripInput.value.trim();
             if (!userInput) {
-                aiResponseText.textContent = translations[currentLang].aiResponseHeading + "\n" + translations[currentLang].aiContactPrompt;
+                aiResponseText.textContent = translations[currentLang].aiResponseHeading; // Clear previous response text
+                aiContactPromptContainer.innerHTML = `
+                    <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
+                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
+                `;
                 aiResponseOutput.classList.remove('hidden');
                 return;
             }
@@ -834,6 +862,10 @@
             // Check if budget is less than 1400
             if (budget > 0 && budget < 1400) {
                 aiResponseText.textContent = translations[currentLang].lowBudgetMessage;
+                aiContactPromptContainer.innerHTML = `
+                    <span data-lang-key="lowBudgetContactPrompt">${translations[currentLang].lowBudgetContactPrompt}</span>
+                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
+                `;
                 aiResponseOutput.classList.remove('hidden');
                 loadingIndicator.classList.remove('active');
                 return; // Stop further execution
@@ -844,16 +876,17 @@
 
             try {
                 let chatHistory = [];
+                // Updated prompt to include a compelling call to action
                 const prompt = `أنت وكيل سفر خبير من شركة 'سفر جو' المتخصصة في الرحلات إلى أوروبا وآسيا (باستثناء اليابان والإمارات). بناءً على المعلومات التالية من العميل: "${userInput}"، اقترح خطة رحلة جذابة ومفصلة. يجب أن تتضمن الاقتراح:
 1.  **الوجهة:** (دولة/مدينة مقترحة من أوروبا أو آسيا، باستثناء اليابان والإمارات).
 2.  **لماذا هذه الوجهة؟** (شرح موجز لجاذبيتها بناءً على اهتمامات العميل).
 3.  **أنشطة مقترحة:** (3-5 أنشطة أو معالم رئيسية تتناسب مع اهتمامات العميل).
-4.  **ملاحظة إضافية:** (جملة تشجع العميل على التواصل مع سفر جو للحصول على تفاصيل أكثر أو حجز الرحلة).
+4.  **ملاحظة إضافية:** (جملة تشجع العميل على التواصل مع سفر جو للحصول على تفاصيل أكثر أو حجز الرحلة، مع التركيز على عروض العيد أو عروض خاصة أخرى).
 اجعل الرد جذاباً ومحفزاً للسفر.`;
 
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyAJDPRVIo91A7xHDV1T-VpvgP7sZkaIMCw";
+                const apiKey = ""; // IMPORTANT: This should be an empty string for Canvas to inject the key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -868,15 +901,28 @@
                     result.candidates[0].content && result.candidates[0].content.parts &&
                     result.candidates[0].content.parts.length > 0) {
                     const text = result.candidates[0].content.parts[0].text;
-                    aiResponseText.textContent = text;
+                    // Append the Eid offer CTA to the AI response
+                    aiResponseText.textContent = text; // Set the main response text
+                    aiContactPromptContainer.innerHTML = `
+                        <span data-lang-key="aiContactPrompt">${translations[currentLang].eidOfferCta}</span>
+                        <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
+                    `;
                     aiResponseOutput.classList.remove('hidden');
                 } else {
-                    aiResponseText.textContent = translations[currentLang].aiResponseHeading + "\n" + translations[currentLang].aiContactPrompt;
+                    aiResponseText.textContent = translations[currentLang].aiResponseHeading;
+                    aiContactPromptContainer.innerHTML = `
+                        <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
+                        <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
+                    `;
                     aiResponseOutput.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("Error calling Gemini API:", error);
-                aiResponseText.textContent = translations[currentLang].aiResponseHeading + "\n" + translations[currentLang].aiContactPrompt;
+                aiResponseText.textContent = translations[currentLang].aiResponseHeading;
+                aiContactPromptContainer.innerHTML = `
+                    <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
+                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
+                `;
                 aiResponseOutput.classList.remove('hidden');
             } finally {
                 loadingIndicator.classList.remove('active');
