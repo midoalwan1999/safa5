@@ -12,7 +12,8 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
-            direction: rtl; /* Default to RTL for Arabic */
+            /* Default to RTL for Arabic, will be toggled by JS */
+            direction: rtl;
         }
 
         /* Styling for WhatsApp button */
@@ -32,8 +33,15 @@
         .whatsapp-button:hover {
             background-color: #1DA851;
         }
-        .whatsapp-icon {
-            margin-left: 8px; /* Margin for icon in RTL */
+        /* RTL specific margin for WhatsApp icon */
+        .rtl .whatsapp-icon {
+            margin-left: 8px;
+            margin-right: 0;
+        }
+        /* LTR specific margin for WhatsApp icon */
+        .ltr .whatsapp-icon {
+            margin-right: 8px;
+            margin-left: 0;
         }
 
         /* Card styling for destination boxes */
@@ -45,6 +53,7 @@
             flex-direction: column; /* Stack content vertically */
             justify-content: space-between; /* Push button to bottom */
             position: relative; /* Needed for absolute positioning of price */
+            min-height: 420px; /* Ensure consistent card height */
         }
         .card-image {
             width: 100%;
@@ -55,38 +64,52 @@
         }
         .card-content {
             flex-grow: 1; /* Allow content to take available space */
+            padding: 0 1rem; /* Add horizontal padding to content */
         }
 
         /* Hero section background and text styling */
         .hero-section {
-            background: linear-gradient(to right, #0a1128, #1e3a8a);
+            background: linear-gradient(to right, #0A1128, #1F4172); /* Adjusted blue gradient */
             color: white;
-            padding: 4rem 1rem; /* Add horizontal padding for mobile */
+            padding: 5rem 1rem; /* Increased vertical padding for more impact */
             text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem; /* Larger heading */
+            line-height: 1.2;
+        }
+        .hero-section p {
+            font-size: 1.25rem; /* Slightly larger subtitle */
+        }
+        .hero-section a {
+            padding: 1rem 3rem; /* Larger button */
+            font-size: 1.1rem;
         }
 
         /* Footer styling */
         .footer {
-            background-color: #0a1128;
+            background-color: #0A1128; /* Consistent dark blue */
             color: white;
             padding: 2rem 1rem; /* Add horizontal padding for mobile */
             text-align: center;
         }
 
         /* Responsive adjustments for RTL/LTR */
-        .text-right { text-align: right; }
-        .mr-3 { margin-right: 0.75rem; margin-left: 0; }
-        .ml-2 { margin-left: 0.5rem; margin-right: 0; }
-        .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+        /* Default RTL margins */
+        .rtl .mr-3 { margin-right: 0.75rem; margin-left: 0; }
+        .rtl .ml-2 { margin-left: 0.5rem; margin-right: 0; }
+        .rtl .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
             --tw-space-x-reverse: 1;
         }
 
-        .text-left { text-align: left; }
-        .ml-3 { margin-left: 0.75rem; margin-right: 0; }
-        .mr-2 { margin-right: 0.5rem; margin-left: 0; }
-        .space-x > :not([hidden]) ~ :not([hidden]) {
+        /* LTR overrides */
+        .ltr .mr-3 { margin-left: 0.75rem; margin-right: 0; }
+        .ltr .ml-2 { margin-right: 0.5rem; margin-left: 0; }
+        .ltr .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
             --tw-space-x-reverse: 0;
         }
+        .ltr .text-right { text-align: left; }
+        .ltr .text-left { text-align: right; }
 
         /* Mobile navigation toggle */
         .mobile-menu-button {
@@ -103,7 +126,9 @@
                 width: 100%;
                 position: absolute;
                 top: 64px; /* Height of header */
+                /* Adjust for RTL/LTR */
                 right: 0;
+                left: auto;
                 background-color: white;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 z-index: 10;
@@ -138,13 +163,26 @@
             .language-switcher button {
                 width: 80%; /* Make button wider on mobile */
             }
+            /* Adjust mobile menu position for LTR */
+            .ltr .main-nav {
+                left: 0;
+                right: auto;
+            }
+            .hero-section h1 {
+                font-size: 2.5rem; /* Smaller heading on mobile */
+            }
+            .hero-section p {
+                font-size: 1rem; /* Smaller subtitle on mobile */
+            }
         }
 
         /* Floating WhatsApp Button Specific Styles */
         .floating-whatsapp-button {
             position: fixed;
             bottom: 20px;
-            right: 20px; /* Position on right for RTL */
+            /* Default to right for RTL */
+            right: 20px;
+            left: auto; /* Ensure left is auto for RTL */
             background-color: #25D366;
             color: white;
             padding: 15px;
@@ -171,8 +209,10 @@
         .price-tag {
             position: absolute;
             top: 0.75rem; /* 12px from top */
-            right: 0.75rem; /* 12px from right for RTL */
-            background-color: rgba(255, 193, 7, 0.9); /* Amber-like color with transparency */
+            /* Default to right for RTL */
+            right: 0.75rem;
+            left: auto; /* Ensure left is auto for RTL */
+            background-color: rgba(250, 204, 21, 0.9); /* Yellow-400 with transparency */
             color: #1a202c; /* Dark text for contrast */
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
@@ -206,10 +246,17 @@
             transform: translateY(-3px);
             background-color: #d1d9e6; /* Slightly darker on hover */
         }
-        .contact-info-item i {
+        /* Default RTL icon margin */
+        .rtl .contact-info-item i {
             font-size: 1.5rem;
-            color: #1e3a8a; /* Dark blue icon color */
+            color: #0A1128; /* Dark blue icon color */
             margin-left: 1rem; /* Space between icon and text for RTL */
+            margin-right: 0;
+        }
+        /* LTR icon margin override */
+        .ltr .contact-info-item i {
+            margin-right: 1rem;
+            margin-left: 0;
         }
         .contact-info-item span {
             font-size: 1.1rem;
@@ -219,26 +266,21 @@
         .contact-info-item a {
             text-decoration: none; /* Remove underline from links */
         }
-        /* Adjust icon margin for LTR */
-        .ltr .contact-info-item i {
-            margin-right: 1rem;
-            margin-left: 0;
-        }
 
         /* Specific styles for contact buttons to make them more prominent */
         .contact-button-phone {
-            background-color: #3b82f6; /* Blue-600 */
+            background-color: #1F4172; /* Secondary blue */
             color: white;
         }
         .contact-button-phone:hover {
-            background-color: #2563eb; /* Blue-700 */
+            background-color: #0A1128; /* Darker blue on hover */
         }
         .contact-button-email {
-            background-color: #ef4444; /* Red-500 */
-            color: white;
+            background-color: #FACC15; /* Accent yellow */
+            color: #1a202c; /* Dark text */
         }
         .contact-button-email:hover {
-            background-color: #dc2626; /* Red-600 */
+            background-color: #eab308; /* Darker yellow on hover */
         }
         .contact-button-whatsapp-main {
             background-color: #22c55e; /* Green-500 */
@@ -258,7 +300,7 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
         .ai-planner-section h2 {
-            color: #0a1128;
+            color: #0A1128; /* Dark blue heading */
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
@@ -277,7 +319,7 @@
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         .ai-planner-section button {
-            background-color: #facc15; /* Yellow-400 */
+            background-color: #FACC15; /* Yellow-400 */
             color: #1a202c; /* Dark text */
             padding: 1rem 2.5rem;
             border-radius: 9999px;
@@ -298,25 +340,29 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             margin: 2rem auto 0;
-            text-align: right; /* Ensure text aligns right for Arabic */
+            /* Default to right for Arabic */
+            text-align: right;
             line-height: 1.8;
             color: #333;
             border: 1px solid #e2e8f0;
             white-space: pre-wrap; /* Preserve whitespace and line breaks */
         }
+        /* LTR override for AI response text alignment */
+        .ltr .ai-response {
+            text-align: left;
+        }
         .ai-response h3 {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #1e3a8a;
+            color: #0A1128; /* Dark blue heading */
             margin-bottom: 1rem;
             text-align: center;
         }
         .ai-response p {
             margin-bottom: 1rem;
-            /* Removed text-align: center; to allow parent's text-align: right; to take effect */
         }
         .ai-response strong {
-            color: #0a1128;
+            color: #0A1128; /* Dark blue for strong text */
         }
         .loading-indicator {
             display: none;
@@ -417,7 +463,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1549476461-3444439c2d7f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=سانتوريني';" alt="صورة لقرية أويا في سانتوريني" class="card-image">
+                        <img src="https://images.pexels.com/photos/1029021/pexels-photo-1029021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=سانتوريني';" alt="صورة لقرية أويا في سانتوريني" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="santoriniTitle">سانتوريني، اليونان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="santoriniDesc">جزر خلابة، مناظر غروب الشمس الساحرة من قرية أويا.</p>
                     </div>
@@ -431,7 +477,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1505761671935-60453a29195e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=لندن';" alt="صورة لساعة بيج بن في لندن" class="card-image">
+                        <img src="https://images.pexels.com/photos/13295253/pexels-photo-13295253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=لندن';" alt="صورة لساعة بيج بن في لندن" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="londonTitle">لندن، المملكة المتحدة</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="londonDesc">مدينة ملكية نابضة بالحياة، بيج بن، قصر باكنغهام.</p>
                     </div>
@@ -445,7 +491,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1534351450181-ea940a4313f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=امستردام';" alt="صورة لقنوات أمستردام" class="card-image">
+                        <img src="https://images.pexels.com/photos/208733/pexels-photo-208733.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=امستردام';" alt="صورة لقنوات أمستردام" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="amsterdamTitle">أمستردام، هولندا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="amsterdamDesc">قنوات جميلة، متاحف عالمية، ثقافة فريدة.</p>
                     </div>
@@ -463,7 +509,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag" data-lang-key="azerbaijanPrice">تبدأ من 1999 درهم</div>
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1606558239088-77c8e9d6d5d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باكو';" alt="صورة لأبراج اللهب في باكو، أذربيجان" class="card-image">
+                        <img src="https://images.pexels.com/photos/29968179/pexels-photo-29968179/free-photo-of-hiker-enjoying-scenic-mountain-view-in-qusar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باكو';" alt="صورة لأبراج اللهب في باكو، أذربيجان" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="azerbaijanTitle">أذربيجان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="azerbaijanDesc">باكو: مدينة الأضواء، أبراج اللهب، المدينة القديمة.</p>
                     </div>
@@ -477,7 +523,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1572072382755-668b8e0e7a4b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=ماليزيا';" alt="صورة لأبراج بتروناس في ماليزيا" class="card-image">
+                        <img src="https://images.pexels.com/photos/3733565/pexels-photo-3733565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=ماليزيا';" alt="صورة لأبراج بتروناس في ماليزيا" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="malaysiaTitle">ماليزيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="malaysiaDesc">كوالا لامبور - بينانج - لنكاوي: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.</p>
                     </div>
@@ -505,7 +551,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.pexels.com/photos/29968179/pexels-photo-29968179/free-photo-of-hiker-enjoying-scenic-mountain-view-in-qusar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=كازاخستان';" alt="صورة لمدينة ألماتي في كازاخستان" class="card-image">
+                        <img src="https://kazguidedtours.com/img/t3/Big%20Almaty%20Lake_1.jpeg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=كازاخستان';" alt="صورة لمدينة ألماتي في كازاخستان" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="kazakhstanTitle">كازاخستان</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="kazakhstanDesc">الماتي: مواصلات، طيران مباشر، إفطار يومي، فنادق، جولات سياحية.</p>
                     </div>
@@ -519,7 +565,7 @@
                 <div class="card bg-white p-6">
                     <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
                     <div class="card-content">
-                        <img src="https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=بالي';" alt="صورة لمعبد تاناه لوط في بالي" class="card-image">
+                        <img src="https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=بالي';" alt="صورة لمعبد تاناه لوط في بالي" class="card-image">
                         <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="baliTitle">بالي، إندونيسيا</h4>
                         <p class="text-gray-700 text-sm mb-4" data-lang-key="baliDesc">جنة استوائية، شواطئ، معابد، غابات.</p>
                     </div>
@@ -564,8 +610,7 @@
         <div id="ai-response-output" class="ai-response hidden">
             <h3 data-lang-key="aiResponseHeading">اقتراح رحلتك من سفر جو:</h3>
             <p id="ai-response-text"></p>
-            <p class="text-sm text-gray-600 mt-4" id="ai-contact-prompt-container">
-                </p>
+            <p class="text-sm text-gray-600 mt-4" id="ai-contact-prompt-container"></p>
         </div>
     </section>
 
@@ -592,7 +637,7 @@
                 </a>
                 <a href="mailto:info@safargo.com" class="px-6 py-3 rounded-full text-base md:text-lg font-bold transition duration-300 flex items-center contact-info-item contact-button-email">
                     <i class="fas fa-envelope ml-2"></i>
-                    <span data-lang-key="emailUs">راسلنا عبر البريد الإلكتروني</span>: info@safargo.com
+                    <span data-lang-key="emailUs">البريد الإلكتروني</span>: info@safargo.com
                 </a>
                 <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-base md:text-lg contact-info-item contact-button-whatsapp-main" data-lang-key="whatsappContact">
                     <i class="fab fa-whatsapp whatsapp-icon"></i>
@@ -607,20 +652,14 @@
 
     <footer class="footer">
         <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-sm mb-4 md:mb-0" data-lang-key="copyright">&copy; 2024 سفر جو. جميع الحقوق محفوظة.</p>
+            <p class="text-sm mb-4 md:mb-0" data-lang-key="copyright">&copy; 2025 سفر جو. جميع الحقوق محفوظة.</p>
             <div class="flex space-x-4 space-x-reverse">
                 <a href="https://www.instagram.com/safar.trip?igsh=MTNuZ2ZqdW1qYzYyYQ%3D%3D&utm_source=qr"
                    target="_blank" rel="noopener noreferrer"
                    class="text-gray-400 hover:text-white transition duration-300 text-2xl">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-2xl">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-2xl">
-                    <i class="fab fa-twitter"></i>
-                </a>
-            </div>
+                </div>
         </div>
     </footer>
 
@@ -629,13 +668,14 @@
     </a>
 
     <script>
+        // Translations object for multilingual support
         const translations = {
             ar: {
                 home: 'الرئيسية',
                 destinations: 'الوجهات',
                 about: 'عنا',
                 contact: 'اتصل بنا',
-                aiPlanner: 'مخطط الرحلات بالذكاء الاصطناعي', // Updated navigation link text
+                aiPlanner: 'مخطط الرحلات بالذكاء الاصطناعي',
                 heroTitle: 'اكتشف العالم مع سفر جو',
                 heroSubtitle: 'خطط لرحلتك المثالية معنا. مغامرات لا تُنسى في انتظارك!',
                 exploreButton: 'استكشف وجهاتنا',
@@ -667,51 +707,47 @@
                 turkeyTitle: 'اسطنبول، تركيا',
                 turkeyDesc: 'مزيج من الثقافات الشرقية والغربية، آيا صوفيا، البازار الكبير، البوسفور.',
                 turkeyPrice: 'تبدأ من 1800 درهم',
-                additionalDestinationsTitle: 'وجهات إضافية', // Added for the new section
+                parisPrice: 'تبدأ من 2800 درهم',
+                dynamicPrice: 'تبدأ من ', // Placeholder for dynamic prices
+                additionalDestinationsTitle: 'وجهات إضافية',
                 aboutUsTitle: 'عن سفر جو',
                 aboutUsParagraph1: '"سفر جو" هي وكالة سفر رائدة مقرها الشارقة، الإمارات العربية المتحدة، متخصصة في تنظيم الرحلات السياحية المذهلة إلى أجمل الوجهات حول العالم. نحن نلتزم بتقديم تجارب سفر لا تُنسى، مع التركيز على الراحة، الفخامة، والخدمة الشخصية. فريقنا من الخبراء مستعد لمساعدتك في التخطيط لرحلتك القادمة، سواء كانت مغامرة فردية، عطلة عائلية، أو رحلة عمل.',
                 aboutUsParagraph2: 'نحن نؤمن بأن السفر يثري الروح ويوسع الآفاق، ولهذا نسعى جاهدين لتقديم باقات سفر متنوعة تلبي جميع الأذواق والميزانيات. انضم إلينا في رحلتك القادمة واكتشف جمال العالم مع "سفر جو"!',
                 contactUsTitle: 'هل أنت مستعد لرحلتك القادمة؟',
                 contactUsSubtitle: 'تواصل معنا الآن لتحويل أحلامك إلى حقيقة! فريقنا المتخصص جاهز للإجابة على جميع استفساراتك وتصميم باقة سفر تناسب احتياجاتك تمامًا.',
                 callUs: 'اتصل بنا',
-                emailUs: 'راسلنا عبر البريد الإلكتروني',
-                whatsappButton: 'تواصل عبر واتساب',
+                emailUs: 'البريد الإلكتروني', // Shortened email text
                 whatsappContact: 'تواصل عبر واتساب',
                 headquarters: 'المقر الرئيسي: الشارقة، الإمارات العربية المتحدة',
-                copyright: '&copy; 2024 سفر جو. جميع الحقوق محفوظة.',
-                parisPrice: 'تبدأ من 2800 درهم',
-                azerbaijanPrice: 'تبدأ من 1999 درهم',
-                dynamicPricePrefix: 'تبدأ من ',
-                dynamicPriceSuffix: ' درهم',
+                copyright: '&copy; 2025 سفر جو. جميع الحقوق محفوظة.',
+                whatsappButton: 'تواصل عبر واتساب',
                 aiPlannerTitle: '✨خطط لرحلتك المثالية بالذكاء الاصطناعي✨',
                 aiPlannerSubtitle: 'أخبرنا عن أحلامك في السفر! ما هي اهتماماتك؟ ما هي ميزانيتك؟ وكم المدة التي تخطط لرحلتك؟ دع الذكاء الاصطناعي يقترح لك وجهة وأنشطة لا تُنسى.',
                 aiSuggestButton: '✨اقتراح رحلة✨',
                 aiLoading: 'جاري تجهيز رحلتك المثالية...',
                 aiResponseHeading: 'اقتراح رحلتك من سفر جو:',
-                aiContactPrompt: 'هل أعجبك الاقتراح؟ تواصل معنا عبر الواتساب الآن لتحويل هذه الرحلة إلى حقيقة!',
-                lowBudgetMessage: 'عذراً، سفر جو لا تتوفر لديها رحلات بهذه الميزانية. الرحلات تبدأ من 1400 درهم.',
-                lowBudgetContactPrompt: 'تواصل معنا عبر الواتساب الآن لمعرفة العروض المتاحة التي تناسب ميزانيتك!', // New specific message for low budget
-                eidOfferCta: 'لا تفوت عروض العيد المميزة! تواصل معنا الآن للاستفادة من أفضل باقات السفر.' // New CTA
+                aiContactPrompt: '<p style="text-align: center; margin-top: 1.5rem; font-size: 1.1rem; color: #0A1128;">هل أعجبك الاقتراح؟ <strong style="color: #1F4172;">تواصل معنا الآن عبر الواتساب</strong> لتحويل حلمك إلى حقيقة! <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline font-bold">اضغط هنا للدردشة المباشرة</a> أو اتصل على <span class="font-bold" style="font-size: 1.2em; white-space: nowrap;">+971 556 422 416</span>.</p>',
+                lowPriceMessage: 'عذراً، سفر جو ليس لديها أسعار بهذا السعر حالياً. يرجى التواصل معنا لمعرفة العروض المتاحة في الأيام القادمة.',
             },
             en: {
                 home: 'Home',
                 destinations: 'Destinations',
                 about: 'About Us',
                 contact: 'Contact Us',
-                aiPlanner: 'AI Trip Planner', // Updated navigation link text
-                heroTitle: 'Discover the World with SafarGo',
+                aiPlanner: 'AI Trip Planner',
+                heroTitle: 'Discover the World with Safar Go',
                 heroSubtitle: 'Plan your perfect trip with us. Unforgettable adventures await!',
                 exploreButton: 'Explore Our Destinations',
                 ourDestinations: 'Our Featured Destinations',
                 europeTitle: 'Europe',
                 sochiTitle: 'Sochi, Russia',
-                sochiDesc: 'A beautiful coastal city on the Black Sea, famous for its resorts and beaches and Olympic Park.',
+                sochiDesc: 'A beautiful coastal city on the Black Sea, famous for its resorts, beaches, and Olympic Park.',
                 parisTitle: 'Paris, France',
-                parisDesc: 'The City of Lights and Romance, Eiffel Tower, Arc de Triomphe, Louvre Museum.',
+                parisDesc: 'The City of Light and Romance, Eiffel Tower, Arc de Triomphe, Louvre Museum.',
                 romeTitle: 'Rome, Italy',
-                romeDesc: 'The city of great history, Colosseum, Vatican City.',
+                romeDesc: 'City of great history, Colosseum, Vatican City.',
                 santoriniTitle: 'Santorini, Greece',
-                santoriniDesc: 'Stunning islands, enchanting sunsets from Oia village.',
+                santoriniDesc: 'Stunning islands, magical sunsets from Oia village.',
                 londonTitle: 'London, United Kingdom',
                 londonDesc: 'A vibrant royal city, Big Ben, Buckingham Palace.',
                 amsterdamTitle: 'Amsterdam, Netherlands',
@@ -722,171 +758,152 @@
                 malaysiaTitle: 'Malaysia',
                 malaysiaDesc: 'Kuala Lumpur - Penang - Langkawi: Direct international flights, luxury hotels, daily breakfast, private driver tours, airport transfers, taxes and fees included, 24/7 customer service.',
                 vietnamTitle: 'Vietnam',
-                vietnamDesc: 'Hanoi - Ninh Binh - Sapa - Ha Long Bay: Direct international flights, luxury hotels, daily breakfast, private driver tours, airport transfers, taxes and fees included, 24/7 customer service.',
+                vietnamDesc: 'Hanoi - Ninh Binh - Sapa - Halong Bay: Direct international flights, luxury hotels, daily breakfast, private driver tours, airport transfers, taxes and fees included, 24/7 customer service.',
                 kazakhstanTitle: 'Kazakhstan',
-                kazakhstanDesc: 'Almaty: Transportation, direct flights, daily breakfast, hotels, tourist tours.',
+                kazakhstanDesc: 'Almaty: Transportation, direct flights, daily breakfast, hotels, sightseeing tours.',
                 baliTitle: 'Bali, Indonesia',
-                baliDesc: 'Tropical paradise, beaches, temples, forests.',
+                baliDesc: 'A tropical paradise, beaches, temples, forests.',
                 turkeyTitle: 'Istanbul, Turkey',
-                turkeyDesc: 'A mix of Eastern and Western cultures, Hagia Sophia, Grand Bazaar, Bosphorus.',
-                turkeyPrice: 'Starts from 1800 AED',
-                additionalDestinationsTitle: 'Additional Destinations', // Added for the new section
-                aboutUsTitle: 'About SafarGo',
-                aboutUsParagraph1: 'SafarGo is a leading travel agency based in Sharjah, UAE, specializing in organizing amazing tourist trips to the most beautiful destinations around the world. We are committed to providing unforgettable travel experiences, focusing on comfort, luxury, and personalized service. Our team of experts is ready to help you plan your next trip, whether it\'s a solo adventure, a family vacation, or a business trip.',
-                aboutUsParagraph2: 'We believe that travel enriches the soul and broadens horizons, which is why we strive to offer diverse travel packages that cater to all tastes and budgets. Join us on your next journey and discover the beauty of the world with "SafarGo"!',
-                contactUsTitle: 'Ready for Your Next Adventure?',
+                turkeyDesc: 'A blend of Eastern and Western cultures, Hagia Sophia, Grand Bazaar, Bosphorus.',
+                turkeyPrice: 'Starting from 1800 AED',
+                parisPrice: 'Starting from 2800 AED',
+                dynamicPrice: 'Starting from ', // Placeholder for dynamic prices
+                additionalDestinationsTitle: 'Additional Destinations',
+                aboutUsTitle: 'About Safar Go',
+                aboutUsParagraph1: 'Safar Go is a leading travel agency based in Sharjah, UAE, specializing in organizing amazing tourist trips to the most beautiful destinations around the world. We are committed to providing unforgettable travel experiences, focusing on comfort, luxury, and personalized service. Our team of experts is ready to help you plan your next trip, whether it\'s a solo adventure, a family vacation, or a business trip.',
+                aboutUsParagraph2: 'We believe that travel enriches the soul and broadens horizons, which is why we strive to offer diverse travel packages that cater to all tastes and budgets. Join us on your next journey and discover the beauty of the world with "Safar Go"!',
+                contactUsTitle: 'Ready for Your Next Journey?',
                 contactUsSubtitle: 'Contact us now to turn your dreams into reality! Our specialized team is ready to answer all your inquiries and design a travel package that perfectly suits your needs.',
                 callUs: 'Call Us',
-                emailUs: 'Email Us',
-                whatsappButton: 'Contact via WhatsApp',
+                emailUs: 'Email', // Shortened email text
                 whatsappContact: 'Contact via WhatsApp',
                 headquarters: 'Headquarters: Sharjah, United Arab Emirates',
-                copyright: '&copy; 2024 SafarGo. All rights reserved.',
-                parisPrice: 'Starts from 2800 AED',
-                azerbaijanPrice: 'Starts from 1999 AED',
-                dynamicPricePrefix: 'Starts from ',
-                dynamicPriceSuffix: ' AED',
+                copyright: '&copy; 2025 Safar Go. All rights reserved.',
+                whatsappButton: 'Contact via WhatsApp',
                 aiPlannerTitle: '✨Plan Your Perfect Trip with AI✨',
-                aiPlannerSubtitle: 'Tell us about your travel dreams! What are your interests? What\'s your budget? And how long do you plan your trip? Let AI suggest an unforgettable destination and activities for you.',
+                aiPlannerSubtitle: 'Tell us about your travel dreams! What are your interests? What\'s your budget? How long do you plan to travel? Let AI suggest an unforgettable destination and activities for you.',
                 aiSuggestButton: '✨Suggest Trip✨',
                 aiLoading: 'Preparing your perfect trip...',
-                aiResponseHeading: 'Your Trip Suggestion from SafarGo:',
-                aiContactPrompt: 'Did you like the suggestion? Contact us via WhatsApp now to turn this trip into a reality!',
-                lowBudgetMessage: 'Sorry, SafarGo does not have trips available for this budget. Trips start from 1400 AED.',
-                lowBudgetContactPrompt: 'Contact us via WhatsApp now to learn about available offers that suit your budget!', // New specific message for low budget
-                eidOfferCta: 'Don\'t miss out on special Eid offers! Contact us now to avail the best travel packages.' // New CTA
+                aiResponseHeading: 'Your Trip Suggestion from Safar Go:',
+                aiContactPrompt: '<p style="text-align: center; margin-top: 1.5rem; font-size: 1.1rem; color: #0A1128;">Did you like the suggestion? <strong style="color: #1F4172;">Contact us now via WhatsApp</strong> to turn your dream into reality! <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline font-bold">Click here to chat live</a> or call <span class="font-bold" style="font-size: 1.2em; white-space: nowrap;">+971 556 422 416</span>.</p>',
+                lowPriceMessage: 'Sorry, Safar Go does not currently have prices at this rate. Please contact us to inquire about future availability.',
             }
         };
 
         let currentLang = 'ar'; // Default language is Arabic
 
-        // Function to generate a random integer within a range
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            // Ensure the last digit is 9 for attractiveness
-            let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-            // Adjust to end with 9, while staying within range if possible
-            if (randomNum % 10 !== 9) {
-                if (randomNum + (9 - (randomNum % 10)) <= max) {
-                    randomNum = randomNum + (9 - (randomNum % 10));
-                } else if (randomNum - (randomNum % 10) - 1 >= min) {
-                    randomNum = randomNum - (randomNum % 10) - 1;
-                } else {
-                    // Fallback if unable to end with 9 within range
-                    randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-                }
-            }
-            return randomNum;
-        }
-
-        // Function to set the language and update content
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-            document.getElementById('lang-toggle').textContent = (lang === 'ar') ? 'English' : 'العربية';
-
-            // Update all elements with data-lang-key
+        // Function to update text content based on current language
+        function updateContent() {
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    // Special handling for dynamic price tags and contact prompt as they have mixed content
+                    if (key === 'dynamicPrice') {
+                        // The price is already set dynamically, just prepend the translated text
+                        // We need to ensure the price is not reset on language toggle if it's already set
+                        if (element.dataset.currentPrice) { // Only update if a dynamic price has been set
+                            element.textContent = translations[currentLang][key] + element.dataset.currentPrice;
+                        }
+                    } else if (key === 'aiContactPrompt') {
+                        // This element's content is set by innerHTML, not textContent
+                        // It's also populated by the AI response, so only update if it has content
+                        // The AI response is dynamic, so we only update this if the AI response is visible
+                        if (!document.getElementById('ai-response-output').classList.contains('hidden')) {
+                             element.innerHTML = translations[currentLang][key];
+                        }
+                    }
+                    else {
+                        element.textContent = translations[currentLang][key];
+                    }
                 }
             });
 
-            // The company name "Safar Go" is now static English and doesn't need translation logic here.
-            // document.getElementById('company-name').textContent = (lang === 'ar') ? 'سفر جو' : 'Safar Go';
+            // Update directionality
+            document.documentElement.lang = currentLang;
+            document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.body.classList.remove('rtl', 'ltr');
+            document.body.classList.add(currentLang);
 
-            // Update dynamic prices
-            updateDynamicPrices(lang);
+            // Update language toggle button text
+            const langToggleButton = document.getElementById('lang-toggle');
+            langToggleButton.textContent = currentLang === 'ar' ? 'English' : 'العربية';
         }
 
-        // Function to update dynamic prices
-        function updateDynamicPrices(lang) {
-            document.querySelectorAll('.price-dynamic').forEach(priceTag => {
-                const randomPrice = getRandomInt(1900, 2800);
-                priceTag.textContent = translations[lang].dynamicPricePrefix + randomPrice + translations[lang].dynamicPriceSuffix;
-            });
-        }
+        // --- Event Listeners ---
 
-        // Mobile menu toggle functionality
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mainNav = document.getElementById('main-nav');
+        // Language Toggle
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            setDynamicPrices(); // Re-set dynamic prices to update their prefix
+            updateContent();
+        });
 
-        mobileMenuButton.addEventListener('click', () => {
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            const mainNav = document.getElementById('main-nav');
             mainNav.classList.toggle('active');
         });
 
-        // Close mobile menu when a nav link is clicked
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mainNav.classList.remove('active');
+        // Dynamic Pricing for destination cards
+        function setDynamicPrices() {
+            const dynamicPriceElements = document.querySelectorAll('.price-tag.price-dynamic');
+            dynamicPriceElements.forEach(element => {
+                // Only generate a new random price if it hasn't been set before
+                if (!element.dataset.originalPrice) {
+                    // Generate a price between 1500 and 3500, ensuring it ends with 9
+                    const minPrice = 1500;
+                    const maxPrice = 3500;
+                    let randomPrice = Math.floor(Math.random() * ((maxPrice - 9 - minPrice) / 10 + 1)) * 10 + minPrice + 9;
+                    if (randomPrice > maxPrice) { // Adjust if it exceeds max after adding 9
+                        randomPrice = maxPrice - (maxPrice % 10) + 9;
+                        if (randomPrice > maxPrice) randomPrice -= 10;
+                    }
+                    element.dataset.currentPrice = `${randomPrice} درهم`; // Store the price in AED
+                }
+                // Update the text with the current language's prefix and stored price
+                element.textContent = translations[currentLang].dynamicPrice + element.dataset.currentPrice;
             });
-        });
+        }
 
-        // Toggle language on button click
-        document.getElementById('lang-toggle').addEventListener('click', () => {
-            setLanguage(currentLang === 'ar' ? 'en' : 'ar');
-        });
+        // AI Trip Planner functionality
+        document.getElementById('ai-suggest-button').addEventListener('click', async () => {
+            const tripInput = document.getElementById('ai-trip-input').value;
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const aiResponseOutput = document.getElementById('ai-response-output');
+            const aiResponseText = document.getElementById('ai-response-text');
+            const aiContactPromptContainer = document.getElementById('ai-contact-prompt-container');
 
-        // Gemini API Integration
-        const aiTripInput = document.getElementById('ai-trip-input');
-        const aiSuggestButton = document.getElementById('ai-suggest-button');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const aiResponseOutput = document.getElementById('ai-response-output');
-        const aiResponseText = document.getElementById('ai-response-text');
-        const aiContactPromptContainer = document.getElementById('ai-contact-prompt-container'); // Get the new container
-
-        aiSuggestButton.addEventListener('click', async () => {
-            const userInput = aiTripInput.value.trim();
-            if (!userInput) {
-                aiResponseText.textContent = translations[currentLang].aiResponseHeading; // Clear previous response text
-                aiContactPromptContainer.innerHTML = `
-                    <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
-                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-                `;
-                aiResponseOutput.classList.remove('hidden');
-                return;
-            }
-
-            // Regular expression to find numbers that might represent a budget (e.g., 1000, 1500 درهم, 2000$)
-            const budgetRegex = /(\d{3,}(?:[.,]\d{3})*(?:[.,]\d{1,2})?)\s*(درهم|AED|\$|ريال|دولار|يورو|جنيه)?/i;
-            const match = userInput.match(budgetRegex);
-            let budget = 0;
-
-            if (match && match[1]) {
-                // Remove commas/dots used as thousand separators and parse
-                budget = parseInt(match[1].replace(/[.,]/g, ''), 10);
-            }
-
-            // Check if budget is less than 1400
-            if (budget > 0 && budget < 1400) {
-                aiResponseText.textContent = translations[currentLang].lowBudgetMessage;
-                aiContactPromptContainer.innerHTML = `
-                    <span data-lang-key="lowBudgetContactPrompt">${translations[currentLang].lowBudgetContactPrompt}</span>
-                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-                `;
-                aiResponseOutput.classList.remove('hidden');
-                loadingIndicator.classList.remove('active');
-                return; // Stop further execution
-            }
-
+            // Clear previous response and show loading
+            aiResponseOutput.classList.add('hidden');
+            aiResponseText.textContent = '';
+            aiContactPromptContainer.innerHTML = ''; // Clear the contact prompt as well
             loadingIndicator.classList.add('active');
-            aiResponseOutput.classList.add('hidden'); // Hide previous response
+
+            // Determine the language for the AI prompt based on currentLang
+            const promptLanguage = currentLang === 'ar' ? 'Arabic' : 'English';
+
+            // Construct the prompt for the AI
+            // Added explicit instruction to ensure price is >= 1400 AED
+            const prompt = `As a travel agent for "Safar Go" based in Sharjah, UAE, suggest a personalized travel itinerary based on the following user preferences. Provide a concise and appealing response, including a suggested destination, 3-4 key activities/attractions, and a general price range. **Crucially, ensure the price is clearly stated in the format "Starting from X AED" (e.g., "Starting from 2500 AED") and that X is always 1400 or higher.** The response should be in ${promptLanguage}.
+
+User preferences: "${tripInput}"
+
+Structure your response clearly. Example:
+Suggested Destination: [City, Country]
+Activities:
+- [Activity 1]
+- [Activity 2]
+- [Activity 3]
+Price Range: [Starting from X AED]`;
 
             try {
                 let chatHistory = [];
-                // Updated prompt to include a compelling call to action
-                const prompt = `أنت وكيل سفر خبير من شركة 'سفر جو' المتخصصة في الرحلات إلى أوروبا وآسيا (باستثناء اليابان والإمارات). بناءً على المعلومات التالية من العميل: "${userInput}"، اقترح خطة رحلة جذابة ومفصلة. يجب أن تتضمن الاقتراح:
-1.  **الوجهة:** (دولة/مدينة مقترحة من أوروبا أو آسيا، باستثناء اليابان والإمارات).
-2.  **لماذا هذه الوجهة؟** (شرح موجز لجاذبيتها بناءً على اهتمامات العميل).
-3.  **أنشطة مقترحة:** (3-5 أنشطة أو معالم رئيسية تتناسب مع اهتمامات العميل).
-4.  **ملاحظة إضافية:** (جملة تشجع العميل على التواصل مع سفر جو للحصول على تفاصيل أكثر أو حجز الرحلة، مع التركيز على عروض العيد أو عروض خاصة أخرى).
-اجعل الرد جذاباً ومحفزاً للسفر.`;
-
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // IMPORTANT: This should be an empty string for Canvas to inject the key
+                // The API key is provided by the Canvas environment at runtime when left as an empty string.
+                // Do NOT insert your actual API key here directly, as it will be exposed.
+                const apiKey = "AIzaSyAJDPRVIo91A7xHDV1T-VpvgP7sZkaIMCw";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -895,45 +912,51 @@
                     body: JSON.stringify(payload)
                 });
 
-                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
+                const result = await response.json();
                 if (result.candidates && result.candidates.length > 0 &&
                     result.candidates[0].content && result.candidates[0].content.parts &&
                     result.candidates[0].content.parts.length > 0) {
                     const text = result.candidates[0].content.parts[0].text;
-                    // Append the Eid offer CTA to the AI response
-                    aiResponseText.textContent = text; // Set the main response text
-                    aiContactPromptContainer.innerHTML = `
-                        <span data-lang-key="aiContactPrompt">${translations[currentLang].eidOfferCta}</span>
-                        <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-                    `;
+
+                    // Extract price from AI response using a more flexible regex
+                    const priceMatch = text.match(/(\d+)\s*AED/i); // Look for any number followed by AED
+                    let suggestedPrice = null;
+                    if (priceMatch && priceMatch[1]) {
+                        suggestedPrice = parseInt(priceMatch[1], 10);
+                    }
+
+                    // Check price condition (now 1400 AED)
+                    if (suggestedPrice !== null && suggestedPrice < 1400) {
+                        aiResponseText.textContent = translations[currentLang].lowPriceMessage;
+                    } else {
+                        aiResponseText.textContent = text;
+                    }
+                    // Always show the contact prompt after the AI response
+                    aiContactPromptContainer.innerHTML = translations[currentLang].aiContactPrompt;
                     aiResponseOutput.classList.remove('hidden');
                 } else {
-                    aiResponseText.textContent = translations[currentLang].aiResponseHeading;
-                    aiContactPromptContainer.innerHTML = `
-                        <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
-                        <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-                    `;
+                    aiResponseText.textContent = currentLang === 'ar' ? 'عذراً، لم أتمكن من إنشاء خطة رحلة. يرجى المحاولة مرة أخرى.' : 'Sorry, I could not generate a trip plan. Please try again.';
                     aiResponseOutput.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                aiResponseText.textContent = translations[currentLang].aiResponseHeading;
-                aiContactPromptContainer.innerHTML = `
-                    <span data-lang-key="aiContactPrompt">${translations[currentLang].aiContactPrompt}</span>
-                    <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline">اضغط هنا للتواصل</a>
-                `;
+                console.error('Error generating trip plan:', error);
+                aiResponseText.textContent = currentLang === 'ar' ? 'حدث خطأ أثناء إنشاء خطة الرحلة. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.' : 'An error occurred while generating the trip plan. Please check your internet connection and try again.';
                 aiResponseOutput.classList.remove('hidden');
             } finally {
                 loadingIndicator.classList.remove('active');
             }
         });
 
-        // Event listener for when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set default language to Arabic
-            setLanguage('ar');
-        });
+
+        // Initial setup on page load
+        window.onload = () => {
+            setDynamicPrices(); // Set initial dynamic prices
+            updateContent();    // Apply initial language (Arabic by default)
+        };
     </script>
 </body>
 </html>
