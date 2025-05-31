@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صحتك - حاسبة السعرات الحرارية الذكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>سعر العملات - لحظة بلحظة | أسعار الدولار والذهب اليوم</title>
+    <meta name="description" content="تابع أسعار العملات والذهب لحظة بلحظة. سعر الدولار الأمريكي، اليورو، الريال السعودي مقابل الجنيه المصري. حاسبة تحويل العملات وأخبار اقتصادية">
+    <meta name="keywords" content="سعر الدولار, سعر الذهب, تحويل العملات, سعر اليورو, الجنيه المصري">
+    <meta name="author" content="سعر العملات">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="سعر العملات - لحظة بلحظة">
+    <meta property="og:description" content="تابع أسعار العملات والذهب اليوم">
+    <meta property="og:type" content="website">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FinancialProduct",
+        "name": "سعر العملات",
+        "description": "موقع لمتابعة أسعار العملات والذهب",
+        "provider": {
+            "@type": "Organization",
+            "name": "سعر العملات"
+        }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -14,1009 +38,969 @@
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #D6C1E6 0%, #CBB4E1 50%, #E8D5F2 100%);
+            font-family: 'Tajawal', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* الخلفية المتحركة */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .wave {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .wave:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            background: #9B59B6;
-            top: 10%;
-            right: 20%;
-            animation-delay: 0s;
-        }
-
-        .wave:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            background: #8E44AD;
-            top: 60%;
-            right: 60%;
-            animation-delay: 2s;
-        }
-
-        .wave:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            background: #AF7AC5;
-            top: 30%;
-            right: 80%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* الهيدر */
+        /* Header Styles */
         .header {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            color: white;
             padding: 1rem 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #6A1B9A;
-        }
-
-        .logo i {
             font-size: 2.5rem;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-item a {
-            text-decoration: none;
-            color: #6A1B9A;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-        }
-
-        .nav-item a:hover {
-            background: rgba(106, 27, 154, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* المحتوى الرئيسي */
-        .main-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        .hero-section {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            color: #6A1B9A;
-            margin-bottom: 1rem;
+        .site-title {
+            font-size: 1.8rem;
             font-weight: 700;
+            color: #fbbf24;
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #8E44AD;
-            margin-bottom: 2rem;
-        }
-
-        .start-btn {
-            background: linear-gradient(45deg, #9B59B6, #8E44AD);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
-        }
-
-        .start-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
-        }
-
-        /* النموذج */
-        .form-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            margin-bottom: 2rem;
-        }
-
-        .form-title {
-            text-align: center;
-            color: #6A1B9A;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #6A1B9A;
-            font-weight: 600;
-        }
-
-        .form-group input, 
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #E1BEE7;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #9B59B6;
-            box-shadow: 0 0 10px rgba(155, 89, 182, 0.2);
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .radio-item {
+        .header-tools {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #F8F4FB;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .radio-item:hover {
-            background: #E1BEE7;
-        }
-
-        .radio-item input[type="radio"] {
-            width: auto;
-        }
-
-        .check-mark {
-            display: none;
-            color: #27AE60;
-            font-size: 1.2rem;
-            position: absolute;
-            left: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .form-group.valid .check-mark {
-            display: block;
-            animation: checkmark 0.5s ease;
-        }
-
-        @keyframes checkmark {
-            0% { transform: scale(0) translateY(-50%); }
-            100% { transform: scale(1) translateY(-50%); }
-        }
-
-        /* أزرار التحكم */
-        .control-buttons {
-            display: flex;
             gap: 1rem;
-            justify-content: center;
             flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 1rem 2rem;
+        .search-box {
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Cairo', sans-serif;
+            outline: none;
+            min-width: 200px;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #9B59B6, #8E44AD);
+        .lang-toggle {
+            background: #059669;
             color: white;
-        }
-
-        .btn-ai {
-            background: linear-gradient(45deg, #3498DB, #2980B9);
-            color: white;
-        }
-
-        .btn-reset {
-            background: linear-gradient(45deg, #E74C3C, #C0392B);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* النتائج */
-        .results-container {
-            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .lang-toggle:hover {
+            background: #047857;
+            transform: translateY(-2px);
+        }
+
+        .datetime {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
             backdrop-filter: blur(10px);
-            display: none;
-            animation: slideUp 0.5s ease;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
         }
 
-        .results-title {
-            text-align: center;
-            color: #6A1B9A;
-            font-size: 2rem;
+        .usd-section {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            padding: 2rem 0;
             margin-bottom: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        .results-grid {
+        .usd-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #fbbf24;
+        }
+
+        .usd-prices {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .result-card {
-            background: linear-gradient(135deg, #F8F4FB, #E8D5F2);
-            padding: 1.5rem;
+        .price-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            border: 2px solid #E1BEE7;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
         }
 
-        .result-card h3 {
-            color: #6A1B9A;
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-label {
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            opacity: 0.9;
         }
 
-        .result-value {
-            font-size: 2rem;
+        .price-value {
+            font-size: 3rem;
             font-weight: 700;
-            color: #8E44AD;
-            margin-bottom: 0.5rem;
+            color: #10b981;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* توصيات الذكاء الاصطناعي */
-        .ai-recommendations {
-            background: linear-gradient(135deg, #E8F5E8, #D4F4DD);
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
             border-radius: 15px;
             padding: 2rem;
-            margin-top: 2rem;
-            border: 2px solid #27AE60;
-            display: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
         }
 
-        .ai-title {
-            color: #27AE60;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Currency Table */
+        .currency-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .currency-table th,
+        .currency-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .currency-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .currency-row {
+            transition: background-color 0.3s ease;
+        }
+
+        .currency-row:hover {
+            background: #f9fafb;
+        }
+
+        .currency-name {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .ai-content {
-            color: #2C3E50;
-            line-height: 1.6;
+        .currency-flag {
+            font-size: 1.5rem;
         }
 
-        /* الوضع الليلي */
-        .dark-mode-toggle {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            background: #6A1B9A;
+        .change-positive {
+            color: #059669;
+            background: #d1fae5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .change-negative {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Calculator */
+        .calculator {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .calc-input,
+        .calc-select {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .calc-input:focus,
+        .calc-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* News Section */
+        .news-item {
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .news-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-time {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Chat Bot */
+        .chatbot {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .chat-send {
+            background: #3b82f6;
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            z-index: 1000;
+            font-weight: 600;
         }
 
-        .dark-mode-toggle:hover {
-            transform: scale(1.1);
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            max-width: 80%;
         }
 
-        /* التصميم المتجاوب */
+        .user-message {
+            background: #3b82f6;
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .form-grid {
+            .content-grid {
                 grid-template-columns: 1fr;
             }
-
-            .control-buttons {
+            
+            .header-content {
                 flex-direction: column;
-                align-items: center;
+                text-align: center;
             }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
+            
+            .usd-prices {
+                grid-template-columns: 1fr;
+            }
+            
+            .site-title {
+                font-size: 1.5rem;
+            }
+            
+            .search-box {
+                min-width: 250px;
             }
         }
 
-        /* تحسينات إضافية */
+        /* Loading Animation */
         .loading {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .spinner {
-            border: 4px solid #E1BEE7;
-            border-top: 4px solid #9B59B6;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            border-top-color: #3b82f6;
+            animation: spin 1s ease-in-out infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Indicator */
+        .update-indicator {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .update-indicator.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <!-- الخلفية المتحركة -->
-    <div class="animated-bg">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
-
-    <!-- الهيدر -->
+    <!-- Header -->
     <header class="header">
-        <nav class="nav-container">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-                <span>صحتك</span>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">💱🇪🇬</div>
+                    <h1 class="site-title" id="siteTitle">سعر العملات – لحظة بلحظة</h1>
+                </div>
+                <div class="header-tools">
+                    <input type="text" class="search-box" id="searchBox" placeholder="بحث عن عملة...">
+                    <button class="lang-toggle" onclick="toggleLanguage()" id="langToggle">English</button>
+                    <div class="datetime" id="datetime"></div>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#home">الرئيسية</a></li>
-                <li class="nav-item"><a href="#about">عن الأداة</a></li>
-                <li class="nav-item"><a href="#ai">الذكاء الاصطناعي</a></li>
-                <li class="nav-item"><a href="#contact">تواصل معنا</a></li>
-            </ul>
-        </nav>
+        </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="main-container">
-        <!-- القسم البطولي -->
-        <section class="hero-section" id="home">
-            <h1 class="hero-title">🍎 أهلاً بك في صحتك</h1>
-            <p class="hero-subtitle">احسب السعرات الحرارية بذكاء واحصل على خطة تغذية مخصصة لك</p>
-            <button class="start-btn" onclick="scrollToForm()">ابدأ الآن 🚀</button>
-        </section>
+    <!-- Update Indicator -->
+    <div class="update-indicator" id="updateIndicator">تم التحديث بنجاح ✅</div>
 
-        <!-- نموذج حساب السعرات -->
-        <section class="form-container" id="calculator">
-            <h2 class="form-title">💻 حاسبة السعرات الذكية</h2>
-            <form id="calorieForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>👤 الجنس</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="gender" value="male" required>
-                                <span>🚹 ذكر</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="gender" value="female" required>
-                                <span>🚺 أنثى</span>
-                            </label>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- USD Section -->
+            <section class="usd-section">
+                <h2 class="usd-title" id="usdTitle">سعر الدولار الآن</h2>
+                <div class="usd-prices">
+                    <div class="price-card">
+                        <div class="price-label" id="officialLabel">السعر الرسمي</div>
+                        <div class="price-value" id="officialPrice">30.25 جنيه</div>
+                    </div>
+                    <div class="price-card">
+                        <div class="price-label" id="blackMarketLabel">السوق السوداء</div>
+                        <div class="price-value" id="blackMarketPrice">31.50 جنيه</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Currency Rates -->
+                    <div class="card">
+                        <h2 class="card-title" id="currencyTitle">أسعار العملات</h2>
+                        <table class="currency-table" id="currencyTable">
+                            <thead>
+                                <tr>
+                                    <th id="currencyHeader">العملة</th>
+                                    <th id="buyHeader">الشراء</th>
+                                    <th id="sellHeader">البيع</th>
+                                    <th id="changeHeader">التغيير</th>
+                                </tr>
+                            </thead>
+                            <tbody id="currencyTableBody">
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Gold Prices -->
+                    <div class="card">
+                        <h2 class="card-title" id="goldTitle">أسعار الذهب في مصر</h2>
+                        <table class="currency-table">
+                            <thead>
+                                <tr>
+                                    <th id="goldTypeHeader">النوع</th>
+                                    <th id="goldPriceHeader">السعر (جنيه)</th>
+                                    <th id="goldChangeHeader">التغيير</th>
+                                </tr>
+                            </thead>
+                            <tbody id="goldTableBody">
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- News Section -->
+                    <div class="card">
+                        <h2 class="card-title" id="newsTitle">أخبار العملات والذهب</h2>
+                        <div id="newsContainer">
+                            <!-- Dynamic news content -->
                         </div>
-                        <i class="fas fa-check check-mark"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="age">🎂 العمر (بالسنوات)</label>
-                        <input type="number" id="age" name="age" min="1" max="120" required>
-                        <i class="fas fa-check check-mark"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="height">📏 الطول (بالسنتيمتر)</label>
-                        <input type="number" id="height" name="height" min="100" max="250" required>
-                        <i class="fas fa-check check-mark"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="weight">⚖️ الوزن (بالكيلوغرام)</label>
-                        <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" required>
-                        <i class="fas fa-check check-mark"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="activity">🏃‍♂️ مستوى النشاط البدني</label>
-                        <select id="activity" name="activity" required>
-                            <option value="">اختر مستوى النشاط</option>
-                            <option value="sedentary">🪑 قليل النشاط (مكتبي)</option>
-                            <option value="light">🚶‍♂️ نشاط خفيف (1-3 أيام/أسبوع)</option>
-                            <option value="moderate">🏃‍♂️ متوسط النشاط (3-5 أيام/أسبوع)</option>
-                            <option value="active">🏋️‍♀️ نشيط جداً (6-7 أيام/أسبوع)</option>
-                            <option value="very_active">💪 نشيط للغاية (رياضي)</option>
-                        </select>
-                        <i class="fas fa-check check-mark"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="goal">🎯 الهدف</label>
-                        <select id="goal" name="goal" required>
-                            <option value="">اختر هدفك</option>
-                            <option value="maintain">⚖️ الحفاظ على الوزن</option>
-                            <option value="gain">🔼 زيادة الوزن</option>
-                            <option value="lose">🔽 خسارة الوزن</option>
-                        </select>
-                        <i class="fas fa-check check-mark"></i>
                     </div>
                 </div>
 
-                <div class="control-buttons">
-                    <button type="submit" class="btn btn-primary">🧮 احسب السعرات</button>
-                    <button type="button" class="btn btn-ai" onclick="generateAIRecommendations()">🤖 اقتراحات ذكية</button>
-                    <button type="button" class="btn btn-reset" onclick="resetForm()">🔁 إعادة تعيين</button>
+                <!-- Right Column -->
+                <div>
+                    <!-- Currency Calculator -->
+                    <div class="card">
+                        <h2 class="card-title" id="calcTitle">حاسبة تحويل العملات</h2>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="amount" id="amountLabel">المبلغ</label>
+                                <input type="number" class="calc-input" id="amount" value="1" min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label for="fromCurrency" id="fromLabel">من</label>
+                                <select class="calc-select" id="fromCurrency">
+                                    <option value="USD">🇺🇸 الدولار الأمريكي</option>
+                                    <option value="EUR">🇪🇺 اليورو</option>
+                                    <option value="SAR">🇸🇦 الريال السعودي</option>
+                                    <option value="AED">🇦🇪 الدرهم الإماراتي</option>
+                                    <option value="EGP">🇪🇬 الجنيه المصري</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="toCurrency" id="toLabel">إلى</label>
+                                <select class="calc-select" id="toCurrency">
+                                    <option value="EGP">🇪🇬 الجنيه المصري</option>
+                                    <option value="USD">🇺🇸 الدولار الأمريكي</option>
+                                    <option value="EUR">🇪🇺 اليورو</option>
+                                    <option value="SAR">🇸🇦 الريال السعودي</option>
+                                    <option value="AED">🇦🇪 الدرهم الإماراتي</option>
+                                </select>
+                            </div>
+                            <div class="calc-result" id="calcResult">30.25 جنيه مصري</div>
+                        </div>
+                    </div>
+
+                    <!-- AI Chatbot -->
+                    <div class="card">
+                        <h2 class="card-title" id="chatTitle">اسأل الخبير 🤖</h2>
+                        <div class="chatbot">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="message bot-message">
+                                    مرحباً! أنا مساعدك الذكي لأسئلة العملات والذهب. كيف يمكنني مساعدتك؟
+                                </div>
+                            </div>
+                            <div class="chat-input-container">
+                                <input type="text" class="chat-input" id="chatInput" placeholder="اكتب سؤالك هنا...">
+                                <button class="chat-send" onclick="sendMessage()" id="chatSend">إرسال</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
-
-            <!-- شاشة التحميل -->
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>جاري الحساب... 🔄</p>
             </div>
-        </section>
-
-        <!-- النتائج -->
-        <section class="results-container" id="results">
-            <h2 class="results-title">📊 نتائجك الشخصية</h2>
-            <div class="results-grid" id="resultsGrid"></div>
-            
-            <!-- توصيات الذكاء الاصطناعي -->
-            <div class="ai-recommendations" id="aiRecommendations">
-                <h3 class="ai-title">
-                    <i class="fas fa-robot"></i>
-                    توصيات الذكاء الاصطناعي
-                </h3>
-                <div class="ai-content" id="aiContent"></div>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <!-- زر الوضع الليلي -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="الوضع الليلي">
-        🌙
-    </button>
-
     <script>
-        // متغيرات عامة
-        let isDarkMode = false;
-        let currentResults = null;
+        // Global Variables
+        let currentLanguage = 'ar';
+        let currencyData = {};
+        let goldData = {};
 
-        // التحقق من صحة النموذج
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('calorieForm');
-            const inputs = form.querySelectorAll('input, select');
-
-            inputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    validateField(this);
-                });
-
-                input.addEventListener('input', function() {
-                    validateField(this);
-                });
-            });
-
-            form.addEventListener('submit', handleFormSubmit);
-        });
-
-        function validateField(field) {
-            const formGroup = field.closest('.form-group');
-            
-            if (field.checkValidity() && field.value !== '') {
-                formGroup.classList.add('valid');
-            } else {
-                formGroup.classList.remove('valid');
-            }
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData);
-            
-            // التحقق من صحة البيانات
-            if (!validateFormData(data)) {
-                alert('⚠️ يرجى التأكد من ملء جميع الحقول بشكل صحيح');
-                return;
-            }
-
-            // إظهار شاشة التحميل
-            showLoading();
-            
-            // محاكاة التأخير للحساب
-            setTimeout(() => {
-                const results = calculateCalories(data);
-                displayResults(results);
-                hideLoading();
-            }, 2000);
-        }
-
-        function validateFormData(data) {
-            return data.gender && 
-                   data.age && parseInt(data.age) > 0 && parseInt(data.age) <= 120 &&
-                   data.height && parseInt(data.height) >= 100 && parseInt(data.height) <= 250 &&
-                   data.weight && parseFloat(data.weight) >= 30 && parseFloat(data.weight) <= 300 &&
-                   data.activity && 
-                   data.goal;
-        }
-
-        function calculateCalories(data) {
-            const age = parseInt(data.age);
-            const height = parseInt(data.height);
-            const weight = parseFloat(data.weight);
-            const gender = data.gender;
-            const activity = data.activity;
-            const goal = data.goal;
-
-            // حساب BMR باستخدام معادلة Mifflin-St Jeor
-            let bmr;
-            if (gender === 'male') {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-            } else {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
-            }
-
-            // معاملات النشاط
-            const activityMultipliers = {
-                sedentary: 1.2,
-                light: 1.375,
-                moderate: 1.55,
-                active: 1.725,
-                very_active: 1.9
-            };
-
-            const maintenanceCalories = Math.round(bmr * activityMultipliers[activity]);
-            
-            // حساب السعرات حسب الهدف
-            let targetCalories;
-            let weeklyWeightChange;
-            
-            switch(goal) {
-                case 'lose':
-                    targetCalories = maintenanceCalories - 500; // خسارة 0.5 كيلو أسبوعياً
-                    weeklyWeightChange = -0.5;
-                    break;
-                case 'gain':
-                    targetCalories = maintenanceCalories + 500; // زيادة 0.5 كيلو أسبوعياً
-                    weeklyWeightChange = 0.5;
-                    break;
-                default:
-                    targetCalories = maintenanceCalories;
-                    weeklyWeightChange = 0;
-            }
-
-            // حساب BMI
-            const heightInMeters = height / 100;
-            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
-            
-            // تصنيف BMI
-            let bmiCategory;
-            if (bmi < 18.5) bmiCategory = "نحيف";
-            else if (bmi < 25) bmiCategory = "طبيعي";
-            else if (bmi < 30) bmiCategory = "زائد";
-            else bmiCategory = "سمنة";
-
-            // توزيع المغذيات الكبرى
-            const protein = Math.round((targetCalories * 0.25) / 4); // 25% بروتين
-            const carbs = Math.round((targetCalories * 0.45) / 4);   // 45% كربوهيدرات
-            const fats = Math.round((targetCalories * 0.30) / 9);   // 30% دهون
-
-            return {
-                bmr: Math.round(bmr),
-                maintenance: maintenanceCalories,
-                target: targetCalories,
-                bmi: bmi,
-                bmiCategory: bmiCategory,
-                weeklyChange: weeklyWeightChange,
-                macros: {
-                    protein: protein,
-                    carbs: carbs,
-                    fats: fats
-                },
-                userData: data
-            };
-        }
-
-        function displayResults(results) {
-            currentResults = results;
-            const resultsContainer = document.getElementById('results');
-            const resultsGrid = document.getElementById('resultsGrid');
-            
-            resultsGrid.innerHTML = `
-                <div class="result-card">
-                    <h3>🔥 السعرات اليومية المطلوبة</h3>
-                    <div class="result-value">${results.target}</div>
-                    <p>سعرة حرارية</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>⚖️ معدل الأيض الأساسي</h3>
-                    <div class="result-value">${results.bmr}</div>
-                    <p>سعرة حرارية</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>📏 مؤشر كتلة الجسم</h3>
-                    <div class="result-value">${results.bmi}</div>
-                    <p>${results.bmiCategory}</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>📈 التغيير الأسبوعي المتوقع</h3>
-                    <div class="result-value">${results.weeklyChange > 0 ? '+' : ''}${results.weeklyChange}</div>
-                    <p>كيلوغرام/أسبوع</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>🥩 البروتين اليومي</h3>
-                    <div class="result-value">${results.macros.protein}</div>
-                    <p>غرام</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>🍞 الكربوهيدرات اليومية</h3>
-                    <div class="result-value">${results.macros.carbs}</div>
-                    <p>غرام</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>🥑 الدهون اليومية</h3>
-                    <div class="result-value">${results.macros.fats}</div>
-                    <p>غرام</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3>💧 الماء المنصوح به</h3>
-                    <div class="result-value">${Math.round(parseFloat(results.userData.weight) * 35)}</div>
-                    <p>مل يومياً</p>
-                </div>
-            `;
-            
-            resultsContainer.style.display = 'block';
-            resultsContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function generateAIRecommendations() {
-            if (!currentResults) {
-                alert('⚠️ يرجى حساب السعرات أولاً للحصول على التوصيات الذكية');
-                return;
-            }
-
-            const aiContainer = document.getElementById('aiRecommendations');
-            const aiContent = document.getElementById('aiContent');
-            
-            const recommendations = getAIRecommendations(currentResults);
-            
-            aiContent.innerHTML = recommendations;
-            aiContainer.style.display = 'block';
-            
-            // تمرير سلس إلى التوصيات
-            setTimeout(() => {
-                aiContainer.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
-
-        function getAIRecommendations(results) {
-            const goal = results.userData.goal;
-            const bmi = parseFloat(results.bmi);
-            const age = parseInt(results.userData.age);
-            
-            let recommendations = `
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">🎯 تحليل شخصي لحالتك:</h4>
-                    <p>بناءً على بياناتك، مؤشر كتلة جسمك هو ${results.bmi} (${results.bmiCategory}).</p>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">🍽️ خطة التغذية المقترحة:</h4>
-                    <ul style="margin-right: 1rem;">
-                        <li>تناول ${Math.ceil(results.target/400)} إلى ${Math.ceil(results.target/300)} وجبات يومياً</li>
-                        <li>اشرب ${Math.round(parseFloat(results.userData.weight) * 35)} مل من الماء يومياً</li>
-                        <li>تناول ${results.macros.protein}غ بروتين موزعة على الوجبات</li>
-            `;
-
-            if (goal === 'lose') {
-                recommendations += `
-                        <li>ركز على الخضار والبروتين قليل الدهن</li>
-                        <li>قلل من السكريات والدهون المشبعة</li>
-                        <li>تناول وجبات صغيرة ومتكررة</li>
-                `;
-            } else if (goal === 'gain') {
-                recommendations += `
-                        <li>أضف وجبات خفيفة صحية بين الوجبات الرئيسية</li>
-                        <li>ركز على البروتين والكربوهيدرات المعقدة</li>
-                        <li>تناول المكسرات والأفوكادو</li>
-                `;
-            } else {
-                recommendations += `
-                        <li>حافظ على توازن المغذيات في كل وجبة</li>
-                        <li>تناول وجبات منتظمة في مواعيد ثابتة</li>
-                        <li>نوع في مصادر البروتين والخضار</li>
-                `;
-            }
-
-            recommendations += `
-                    </ul>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">💪 نصائح للنشاط البدني:</h4>
-                    <ul style="margin-right: 1rem;">
-            `;
-
-            if (results.userData.activity === 'sedentary') {
-                recommendations += `
-                        <li>ابدأ بالمشي 20-30 دقيقة يومياً</li>
-                        <li>اصعد الدرج بدلاً من المصعد</li>
-                        <li>قم بتمارين إطالة كل ساعتين</li>
-                `;
-            } else {
-                recommendations += `
-                        <li>حافظ على نشاطك الحالي واعمل على تطويره</li>
-                        <li>أضف تمارين القوة 2-3 مرات أسبوعياً</li>
-                        <li>نوع في أنواع التمارين لتجنب الملل</li>
-                `;
-            }
-
-            recommendations += `
-                    </ul>
-                </div>
-
-                <div style="background: #F0F9FF; padding: 1rem; border-radius: 10px; border-right: 4px solid #3498DB;">
-                    <h4 style="color: #2980B9; margin-bottom: 0.5rem;">📚 نصيحة إضافية:</h4>
-                    <p>احتفظ بمذكرة طعام لمدة أسبوع لتتبع تقدمك، واستشر أخصائي تغذية للحصول على خطة مخصصة أكثر تفصيلاً.</p>
-                </div>
-
-                <div style="text-align: center; margin-top: 1.5rem;">
-                    <button onclick="downloadPDF()" style="background: linear-gradient(45deg, #27AE60, #2ECC71); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: 600; cursor: pointer;">
-                        📄 تحميل التقرير كملف PDF
-                    </button>
-                </div>
-            `;
-
-            return recommendations;
-        }
-
-        function downloadPDF() {
-            // محاكاة تحميل PDF
-            alert('🔄 جاري إنشاء التقرير... سيتم التحميل قريباً!');
-            
-            // في التطبيق الحقيقي، ستقوم بإنشاء PDF هنا
-            setTimeout(() => {
-                alert('✅ تم إنشاء التقرير بنجاح! (في النسخة الحقيقية سيتم التحميل تلقائياً)');
-            }, 2000);
-        }
-
-        function showLoading() {
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('aiRecommendations').style.display = 'none';
-        }
-
-        function hideLoading() {
-            document.getElementById('loading').style.display = 'none';
-        }
-
-        function resetForm() {
-            document.getElementById('calorieForm').reset();
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('aiRecommendations').style.display = 'none';
-            
-            // إزالة علامات التحقق
-            document.querySelectorAll('.form-group').forEach(group => {
-                group.classList.remove('valid');
-            });
-            
-            currentResults = null;
-            
-            // التمرير إلى أعلى النموذج
-            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function scrollToForm() {
-            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            const body = document.body;
-            const toggle = document.querySelector('.dark-mode-toggle');
-            
-            if (isDarkMode) {
-                body.style.filter = 'invert(1) hue-rotate(180deg)';
-                toggle.innerHTML = '☀️';
-                toggle.title = 'الوضع النهاري';
-            } else {
-                body.style.filter = 'none';
-                toggle.innerHTML = '🌙';
-                toggle.title = 'الوضع الليلي';
-            }
-        }
-
-        // تأثيرات إضافية
-        document.addEventListener('mousemove', function(e) {
-            const waves = document.querySelectorAll('.wave');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            waves.forEach((wave, index) => {
-                const speed = (index + 1) * 0.02;
-                const x = mouseX * speed * 50;
-                const y = mouseY * speed * 50;
-                
-                wave.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-
-        // رسائل تحفيزية عشوائية
-        const motivationalMessages = [
-            "💪 أنت على الطريق الصحيح نحو صحة أفضل!",
-            "🌟 كل خطوة صغيرة تقربك من هدفك!",
-            "🔥 استمر في المحاولة، النتائج قادمة!",
-            "🎯 التركيز والصبر مفتاح النجاح!",
-            "💚 صحتك هي أغلى استثمار!"
+        // Sample Data
+        const sampleCurrencies = [
+            { code: 'USD', name: 'الدولار الأمريكي', nameEn: 'US Dollar', flag: '🇺🇸', buy: 30.25, sell: 30.35, change: 0.15 },
+            { code: 'EUR', name: 'اليورو', nameEn: 'Euro', flag: '🇪🇺', buy: 32.80, sell: 32.95, change: -0.25 },
+            { code: 'SAR', name: 'الريال السعودي', nameEn: 'Saudi Riyal', flag: '🇸🇦', buy: 8.05, sell: 8.10, change: 0.05 },
+            { code: 'AED', name: 'الدرهم الإماراتي', nameEn: 'UAE Dirham', flag: '🇦🇪', buy: 8.22, sell: 8.28, change: -0.10 },
+            { code: 'KWD', name: 'الدينار الكويتي', nameEn: 'Kuwaiti Dinar', flag: '🇰🇼', buy: 98.50, sell: 99.20, change: 0.30 },
+            { code: 'GBP', name: 'الجنيه الإسترليني', nameEn: 'British Pound', flag: '🇬🇧', buy: 38.15, sell: 38.35, change: -0.45 },
+            { code: 'JPY', name: 'الين الياباني', nameEn: 'Japanese Yen', flag: '🇯🇵', buy: 0.21, sell: 0.22, change: 0.02 }
         ];
 
-        function showMotivationalMessage() {
-            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+        const sampleGold = [
+            { type: 'عيار 24', typeEn: '24 Karat', price: 2250, change: 15 },
+            { type: 'عيار 22', typeEn: '22 Karat', price: 2063, change: 12 },
+            { type: 'عيار 21', typeEn: '21 Karat', price: 1969, change: 10 },
+            { type: 'عيار 18', typeEn: '18 Karat', price: 1688, change: 8 },
+            { type: 'الجنيه الذهب', typeEn: 'Gold Pound', price: 17604, change: 120 }
+        ];
+
+        const sampleNews = [
+            {
+                title: 'البنك المركزي يثبت أسعار الفائدة',
+                titleEn: 'Central Bank Maintains Interest Rates',
+                time: '2 ساعات مضت',
+                timeEn: '2 hours ago'
+            },
+            {
+                title: 'ارتفاع أسعار الذهب عالمياً',
+                titleEn: 'Global Gold Prices Rise',
+                time: '4 ساعات مضت',
+                timeEn: '4 hours ago'
+            },
+            {
+                title: 'تحسن أداء الجنيه المصري',
+                titleEn: 'Egyptian Pound Performance Improves',
+                time: '6 ساعات مضت',
+                timeEn: '6 hours ago'
+            }
+        ];
+
+        // Translation Object
+        const translations = {
+            ar: {
+                siteTitle: 'سعر العملات – لحظة بلحظة',
+                searchPlaceholder: 'بحث عن عملة...',
+                usdTitle: 'سعر الدولار الآن',
+                officialLabel: 'السعر الرسمي',
+                blackMarketLabel: 'السوق السوداء',
+                currencyTitle: 'أسعار العملات',
+                currencyHeader: 'العملة',
+                buyHeader: 'الشراء',
+                sellHeader: 'البيع',
+                changeHeader: 'التغيير',
+                goldTitle: 'أسعار الذهب في مصر',
+                goldTypeHeader: 'النوع',
+                goldPriceHeader: 'السعر (جنيه)',
+                goldChangeHeader: 'التغيير',
+                newsTitle: 'أخبار العملات والذهب',
+                calcTitle: 'حاسبة تحويل العملات',
+                amountLabel: 'المبلغ',
+                fromLabel: 'من',
+                toLabel: 'إلى',
+                chatTitle: 'اسأل الخبير 🤖',
+                chatSend: 'إرسال',
+                chatPlaceholder: 'اكتب سؤالك هنا...',
+                langToggle: 'English',
+                updateMessage: 'تم التحديث بنجاح ✅'
+            },
+            en: {
+                siteTitle: 'Currency Rates - Live',
+                searchPlaceholder: 'Search for currency...',
+                usdTitle: 'USD Price Now',
+                officialLabel: 'Official Rate',
+                blackMarketLabel: 'Black Market',
+                currencyTitle: 'Currency Rates',
+                currencyHeader: 'Currency',
+                buyHeader: 'Buy',
+                sellHeader: 'Sell',
+                changeHeader: 'Change',
+                goldTitle: 'Gold Prices in Egypt',
+                goldTypeHeader: 'Type',
+                goldPriceHeader: 'Price (EGP)',
+                goldChangeHeader: 'Change',
+                newsTitle: 'Currency & Gold News',
+                calcTitle: 'Currency Converter',
+                amountLabel: 'Amount',
+                fromLabel: 'From',
+                toLabel: 'To',
+                chatTitle: 'Ask Expert 🤖',
+                chatSend: 'Send',
+                chatPlaceholder: 'Type your question here...',
+                langToggle: 'عربي',
+                updateMessage: 'Updated Successfully ✅'
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            loadCurrencyData();
+            loadGoldData();
+            loadNews();
+            setupCalculator();
+            setupChatbot();
             
-            // إنشاء عنصر الرسالة
-            const messageDiv = document.createElement('div');
-            messageDiv.innerHTML = randomMessage;
-            messageDiv.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(45deg, #27AE60, #2ECC71);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 25px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                z-index: 1000;
-                animation: slideIn 0.5s ease, slideOut 0.5s ease 3s forwards;
-                font-weight: 600;
-            `;
+            // Auto update every 30 seconds
+            setInterval(() => {
+                loadCurrencyData();
+                showUpdateIndicator();
+            }, 30000);
             
-            document.body.appendChild(messageDiv);
+            // Update time every second
+            setInterval(updateDateTime, 1000);
+        });
+
+        // Update Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
             
-            // إزالة الرسالة بعد 3.5 ثانية
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 3500);
+            const locale = currentLanguage === 'ar' ? 'ar-EG' : 'en-US';
+            document.getElementById('datetime').textContent = now.toLocaleDateString(locale, options);
         }
 
-        // إضافة الأنيميشن للرسائل التحفيزية
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        // Language Toggle
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            
+            updateTexts();
+            loadCurrencyData();
+            loadGoldData();
+            loadNews();
+        }
 
-        // إظهار رسالة تحفيزية عند حساب السعرات
-        document.getElementById('calorieForm').addEventListener('submit', function() {
-            setTimeout(showMotivationalMessage, 1000);
+        // Update All Texts
+        function updateTexts() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('siteTitle').textContent = t.siteTitle;
+            document.getElementById('searchBox').placeholder = t.searchPlaceholder;
+            document.getElementById('usdTitle').textContent = t.usdTitle;
+            document.getElementById('officialLabel').textContent = t.officialLabel;
+            document.getElementById('blackMarketLabel').textContent = t.blackMarketLabel;
+            document.getElementById('currencyTitle').textContent = t.currencyTitle;
+            document.getElementById('currencyHeader').textContent = t.currencyHeader;
+            document.getElementById('buyHeader').textContent = t.buyHeader;
+            document.getElementById('sellHeader').textContent = t.sellHeader;
+            document.getElementById('changeHeader').textContent = t.changeHeader;
+            document.getElementById('goldTitle').textContent = t.goldTitle;
+            document.getElementById('goldTypeHeader').textContent = t.goldTypeHeader;
+            document.getElementById('goldPriceHeader').textContent = t.goldPriceHeader;
+            document.getElementById('goldChangeHeader').textContent = t.goldChangeHeader;
+            document.getElementById('newsTitle').textContent = t.newsTitle;
+            document.getElementById('calcTitle').textContent = t.calcTitle;
+            document.getElementById('amountLabel').textContent = t.amountLabel;
+            document.getElementById('fromLabel').textContent = t.fromLabel;
+            document.getElementById('toLabel').textContent = t.toLabel;
+            document.getElementById('chatTitle').textContent = t.chatTitle;
+            document.getElementById('chatSend').textContent = t.chatSend;
+            document.getElementById('chatInput').placeholder = t.chatPlaceholder;
+            document.getElementById('langToggle').textContent = t.langToggle;
+        }
+
+        // Load Currency Data
+        function loadCurrencyData() {
+            const tbody = document.getElementById('currencyTableBody');
+            tbody.innerHTML = '';
+            
+            sampleCurrencies.forEach(currency => {
+                // Add some random variation to simulate live data
+                const variation = (Math.random() - 0.5) * 0.1;
+                currency.buy += variation;
+                currency.sell += variation;
+                currency.change += (Math.random() - 0.5) * 0.2;
+                
+                const row = document.createElement('tr');
+                row.className = 'currency-row';
+                
+                const name = currentLanguage === 'ar' ? currency.name : currency.nameEn;
+                const changeClass = currency.change >= 0 ? 'change-positive' : 'change-negative';
+                const changeIcon = currency.change >= 0 ? '📈' : '📉';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="currency-name">
+                            <span class="currency-flag">${currency.flag}</span>
+                            <div>
+                                <div style="font-weight: 600;">${name}</div>
+                                <div style="font-size: 0.8rem; color: #6b7280;">${currency.code}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-weight: 600;">${currency.buy.toFixed(2)}</td>
+                    <td style="font-weight: 600;">${currency.sell.toFixed(2)}</td>
+                    <td>
+                        <span class="${changeClass}">
+                            ${changeIcon} ${currency.change.toFixed(2)}%
+                        </span>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            currencyData = sampleCurrencies;
+        }
+
+        // Load Gold Data
+        function loadGoldData() {
+            const tbody = document.getElementById('goldTableBody');
+            tbody.innerHTML = '';
+            
+            sampleGold.forEach(gold => {
+                // Add some random variation
+                const variation = (Math.random() - 0.5) * 10;
+                gold.price += variation;
+                gold.change += (Math.random() - 0.5) * 5;
+                
+                const row = document.createElement('tr');
+                row.className = 'currency-row';
+                
+                const type = currentLanguage === 'ar' ? gold.type : gold.typeEn;
+                const changeClass = gold.change >= 0 ? 'change-positive' : 'change-negative';
+                const changeIcon = gold.change >= 0 ? '📈' : '📉';
+                
+                row.innerHTML = `
+                    <td style="font-weight: 600;">${type}</td>
+                    <td style="font-weight: 600;">${gold.price.toFixed(0)}</td>
+                    <td>
+                        <span class="${changeClass}">
+                            ${changeIcon} ${gold.change.toFixed(0)}
+                        </span>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Load News
+        function loadNews() {
+            const container = document.getElementById('newsContainer');
+            container.innerHTML = '';
+            
+            sampleNews.forEach(news => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                
+                const title = currentLanguage === 'ar' ? news.title : news.titleEn;
+                const time = currentLanguage === 'ar' ? news.time : news.timeEn;
+                
+                newsItem.innerHTML = `
+                    <div class="news-title">${title}</div>
+                    <div class="news-time">${time}</div>
+                `;
+                
+                container.appendChild(newsItem);
+            });
+        }
+
+        // Setup Calculator
+        function setupCalculator() {
+            const amountInput = document.getElementById('amount');
+            const fromSelect = document.getElementById('fromCurrency');
+            const toSelect = document.getElementById('toCurrency');
+            const resultDiv = document.getElementById('calcResult');
+            
+            function updateCalculation() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const fromCurrency = fromSelect.value;
+                const toCurrency = toSelect.value;
+                
+                // Simple conversion logic (you can make this more sophisticated)
+                let rate = 1;
+                
+                if (fromCurrency === 'USD' && toCurrency === 'EGP') {
+                    rate = 30.25;
+                } else if (fromCurrency === 'EUR' && toCurrency === 'EGP') {
+                    rate = 32.80;
+                } else if (fromCurrency === 'SAR' && toCurrency === 'EGP') {
+                    rate = 8.05;
+                } else if (fromCurrency === 'AED' && toCurrency === 'EGP') {
+                    rate = 8.22;
+                } else if (fromCurrency === 'EGP' && toCurrency === 'USD') {
+                    rate = 1/30.25;
+                } else if (fromCurrency === 'EGP' && toCurrency === 'EUR') {
+                    rate = 1/32.80;
+                } else if (fromCurrency === 'EGP' && toCurrency === 'SAR') {
+                    rate = 1/8.05;
+                } else if (fromCurrency === 'EGP' && toCurrency === 'AED') {
+                    rate = 1/8.22;
+                }
+                
+                const result = amount * rate;
+                const currencySymbol = toCurrency === 'EGP' ? 'جنيه مصري' : toCurrency;
+                
+                resultDiv.textContent = `${result.toFixed(2)} ${currencySymbol}`;
+            }
+            
+            amountInput.addEventListener('input', updateCalculation);
+            fromSelect.addEventListener('change', updateCalculation);
+            toSelect.addEventListener('change', updateCalculation);
+            
+            updateCalculation();
+        }
+
+        // Setup Chatbot
+        function setupChatbot() {
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        // Send Chat Message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messagesContainer = document.getElementById('chatMessages');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            messagesContainer.appendChild(userMessage);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate bot response
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                botMessage.textContent = getBotResponse(message);
+                messagesContainer.appendChild(botMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Get Bot Response
+        function getBotResponse(message) {
+            message = message.toLowerCase();
+            
+            if (message.includes('دولار') || message.includes('usd')) {
+                return 'سعر الدولار الحالي هو 30.25 جنيه للشراء و 30.35 جنيه للبيع. يمكنك متابعة التحديثات اللحظية من الصفحة الرئيسية.';
+            } else if (message.includes('ذهب') || message.includes('gold')) {
+                return 'سعر الذهب عيار 24 اليوم هو 2250 جنيه للجرام. أسعار الذهب تتغير باستمرار بناءً على الأسواق العالمية.';
+            } else if (message.includes('يورو') || message.includes('eur')) {
+                return 'سعر اليورو الحالي هو 32.80 جنيه للشراء و 32.95 جنيه للبيع.';
+            } else if (message.includes('توقع') || message.includes('تنبؤ')) {
+                return 'بناءً على التحليل الفني، يتوقع استقرار أسعار العملات خلال الفترة القادمة مع تذبذبات طفيفة.';
+            } else if (message.includes('شكرا') || message.includes('thanks')) {
+                return 'عفواً! سعدت بمساعدتك. لا تتردد في السؤال عن أي شيء متعلق بالعملات أو الذهب.';
+            } else {
+                return 'يمكنني مساعدتك في أسئلة العملات والذهب. جرب أن تسأل عن سعر الدولار أو الذهب أو توقعات الأسعار.';
+            }
+        }
+
+        // Show Update Indicator
+        function showUpdateIndicator() {
+            const indicator = document.getElementById('updateIndicator');
+            indicator.classList.add('show');
+            
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // Search Functionality
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.currency-row');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
