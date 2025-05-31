@@ -3,422 +3,1021 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💪 تطبيق اللياقة البدنية الاحترافي</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>صحتك - حاسبة السعرات الحرارية الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Custom styles for gradients, shadows, and fonts */
-        body {
-            font-family: 'Inter', sans-serif; /* Using Inter font for a modern look */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple gradient */
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-y: auto; /* Allow scrolling for content that exceeds viewport height */
-        }
-        /* Hide scrollbar for a cleaner look */
-        body::-webkit-scrollbar {
-            display: none;
-        }
-        body {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Custom spinner animation */
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #667eea;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #D6C1E6 0%, #CBB4E1 50%, #E8D5F2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* الخلفية المتحركة */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .wave:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background: #9B59B6;
+            top: 10%;
+            right: 20%;
+            animation-delay: 0s;
+        }
+
+        .wave:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: #8E44AD;
+            top: 60%;
+            right: 60%;
+            animation-delay: 2s;
+        }
+
+        .wave:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: #AF7AC5;
+            top: 30%;
+            right: 80%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* الهيدر */
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6A1B9A;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #6A1B9A;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-item a:hover {
+            background: rgba(106, 27, 154, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: #6A1B9A;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #8E44AD;
+            margin-bottom: 2rem;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #9B59B6, #8E44AD);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+        }
+
+        /* النموذج */
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            text-align: center;
+            color: #6A1B9A;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #6A1B9A;
+            font-weight: 600;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #E1BEE7;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #9B59B6;
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #F8F4FB;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-item:hover {
+            background: #E1BEE7;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto;
+        }
+
+        .check-mark {
+            display: none;
+            color: #27AE60;
+            font-size: 1.2rem;
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .form-group.valid .check-mark {
+            display: block;
+            animation: checkmark 0.5s ease;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0) translateY(-50%); }
+            100% { transform: scale(1) translateY(-50%); }
+        }
+
+        /* أزرار التحكم */
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #9B59B6, #8E44AD);
+            color: white;
+        }
+
+        .btn-ai {
+            background: linear-gradient(45deg, #3498DB, #2980B9);
+            color: white;
+        }
+
+        .btn-reset {
+            background: linear-gradient(45deg, #E74C3C, #C0392B);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* النتائج */
+        .results-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .results-title {
+            text-align: center;
+            color: #6A1B9A;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #F8F4FB, #E8D5F2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #E1BEE7;
+        }
+
+        .result-card h3 {
+            color: #6A1B9A;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8E44AD;
+            margin-bottom: 0.5rem;
+        }
+
+        /* توصيات الذكاء الاصطناعي */
+        .ai-recommendations {
+            background: linear-gradient(135deg, #E8F5E8, #D4F4DD);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid #27AE60;
+            display: none;
+        }
+
+        .ai-title {
+            color: #27AE60;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-content {
+            color: #2C3E50;
+            line-height: 1.6;
+        }
+
+        /* الوضع الليلي */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: #6A1B9A;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* التصميم المتجاوب */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .control-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* تحسينات إضافية */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #E1BEE7;
+            border-top: 4px solid #9B59B6;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center p-4">
-    <div class="container bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full">
-        <div id="abdominalExercisesPage" class="page">
-            <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8 flex items-center justify-center gap-2">
-                💪 تمارين البطن <span class="text-indigo-500">لشباب أقوى</span>
-            </h1>
-
-            <p class="text-center text-gray-600 mb-8">
-                ابدأ رحلتك نحو بطن مشدودة وقوية مع هذه التمارين الفعالة!
-            </p>
-
-            <div class="grid grid-cols-1 gap-6">
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-indigo-400">
-                    <img src="https://placehold.co/80x80/E0E7FF/4F46E5?text=CR" alt="تمرين الكرش" class="rounded-full w-20 h-20 object-cover">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين الكرش (Crunches) 🤸‍♂️</h3>
-                        <p class="text-gray-600 text-sm">
-                            تمرين أساسي يستهدف عضلات البطن العلوية. استلقِ على ظهرك، اثنِ ركبتيك، ارفع جذعك نحو ركبتيك.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-purple-400">
-                    <img src="https://placehold.co/80x80/EDE9FE/7C3AED?text=PL" alt="تمرين البلانك" class="rounded-full w-20 h-20 object-cover">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين البلانك (Plank) ⏱️</h3>
-                        <p class="text-gray-600 text-sm">
-                            يقوي الجسم بالكامل، خاصة عضلات البطن والظهر. حافظ على جسمك مستقيماً مثل اللوح الخشبي.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-green-400">
-                    <img src="https://placehold.co/80x80/D1FAE5/10B981?text=LR" alt="رفع الساقين" class="rounded-full w-20 h-20 object-cover">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">رفع الساقين (Leg Raises) 🦵</h3>
-                        <p class="text-gray-600 text-sm">
-                            يستهدف عضلات البطن السفلية. استلقِ على ظهرك وارفع ساقيك معاً ببطء.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-yellow-400">
-                    <img src="https://placehold.co/80x80/FFFBEB/F59E0B?text=RT" alt="التويست الروسي" class="rounded-full w-20 h-20 object-cover">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">التويست الروسي (Russian Twists) 🔄</h3>
-                        <p class="text-gray-600 text-sm">
-                            يقوي عضلات البطن الجانبية (المائلة). اجلس على الأرض، ارفع قدميك قليلاً، ولف جذعك من جانب لآخر.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-red-400">
-                    <img src="https://placehold.co/80x80/FEE2E2/EF4444?text=BC" alt="تمرين الدراجة" class="rounded-full w-20 h-20 object-cover">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين الدراجة (Bicycle Crunches) 🚴</h3>
-                        <p class="text-gray-600 text-sm">
-                            تمرين شامل للبطن يستهدف العضلات العلوية والسفلية والمائلة. حرك ساقيك كأنك تقود دراجة.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <button id="goToCalculatorBtn" class="w-full p-4 mt-8 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:from-indigo-700 hover:to-purple-800 transition duration-300 transform hover:-translate-y-1">
-                انتقل إلى حاسبة السعرات الحرارية ✨
-            </button>
-        </div>
-
-        <div id="calorieCalculatorPage" class="page hidden">
-            <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8 flex items-center justify-center gap-2">
-                🔥 حاسبة السعرات الحرارية <span class="text-indigo-500">الاحترافية</span>
-            </h1>
-            
-            <form id="calorieForm" class="space-y-6">
-                <div class="form-group">
-                    <label for="gender" class="block text-gray-700 font-semibold mb-2">
-                        🚻 الجنس:
-                    </label>
-                    <select id="gender" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300">
-                        <option value="">اختر الجنس</option>
-                        <option value="male">ذكر ♂️</option>
-                        <option value="female">أنثى ♀️</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="age" class="block text-gray-700 font-semibold mb-2">
-                        🎂 العمر (سنة):
-                    </label>
-                    <input type="number" id="age" min="15" max="80" required 
-                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
-                           placeholder="مثال: 25">
-                </div>
-                
-                <div class="form-group">
-                    <label for="weight" class="block text-gray-700 font-semibold mb-2">
-                        ⚖️ الوزن (كيلوجرام):
-                    </label>
-                    <input type="number" id="weight" min="30" max="300" step="0.1" required 
-                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
-                           placeholder="مثال: 70.5">
-                </div>
-                
-                <div class="form-group">
-                    <label for="height" class="block text-gray-700 font-semibold mb-2">
-                        📏 الطول (سنتيمتر):
-                    </label>
-                    <input type="number" id="height" min="140" max="220" required 
-                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
-                           placeholder="مثال: 175">
-                </div>
-                
-                <div class="form-group">
-                    <label for="activity" class="block text-gray-700 font-semibold mb-2">
-                        🏃 مستوى النشاط:
-                    </label>
-                    <select id="activity" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300">
-                        <option value="">اختر مستوى النشاط</option>
-                        <option value="1.2">قليل الحركة (لا توجد تمارين) 🛋️</option>
-                        <option value="1.375">نشاط خفيف (تمارين خفيفة 1-3 أيام/أسبوع) 🚶</option>
-                        <option value="1.55">نشاط متوسط (تمارين معتدلة 3-5 أيام/أسبوع) 🏋️</option>
-                        <option value="1.725">نشاط عالي (تمارين شاقة 6-7 أيام/أسبوع) 🏃‍♂️</option>
-                        <option value="1.9">نشاط فائق (تمارين صعبة جداً أو عمل جسدي) 🚀</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="w-full p-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:from-indigo-700 hover:to-purple-800 transition duration-300 transform hover:-translate-y-1">
-                    احسب السعرات الحرارية ✨
-                </button>
-            </form>
-            
-            <div id="results" class="results mt-8 p-6 bg-gray-50 rounded-xl shadow-inner hidden">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">📊 النتائج:</h2>
-                
-                <div id="bmi" class="result-item flex justify-between items-center bg-blue-50 p-3 rounded-md mb-3 border-r-4 border-blue-400">
-                    <span class="text-gray-700 font-medium">مؤشر كتلة الجسم (BMI):</span>
-                    <strong id="bmiValue" class="text-blue-700 text-lg"></strong>
-                </div>
-
-                <div id="bmr" class="result-item flex justify-between items-center bg-blue-50 p-3 rounded-md mb-3 border-r-4 border-blue-400">
-                    <span class="text-gray-700 font-medium">معدل الأيض الأساسي (BMR):</span>
-                    <strong id="bmrValue" class="text-blue-700 text-lg"></strong>
-                </div>
-                <div id="maintenance" class="result-item flex justify-between items-center bg-green-50 p-3 rounded-md mb-3 border-r-4 border-green-400">
-                    <span class="text-gray-700 font-medium">للحفاظ على الوزن:</span>
-                    <strong id="maintenanceValue" class="text-green-700 text-lg"></strong>
-                </div>
-                <div id="mildLoss" class="result-item flex justify-between items-center bg-yellow-50 p-3 rounded-md mb-3 border-r-4 border-yellow-400">
-                    <span class="text-gray-700 font-medium">لفقدان وزن خفيف (0.25 كجم/أسبوع):</span>
-                    <strong id="mildLossValue" class="text-yellow-700 text-lg"></strong>
-                </div>
-                <div id="moderateLoss" class="result-item flex justify-between items-center bg-orange-50 p-3 rounded-md mb-3 border-r-4 border-orange-400">
-                    <span class="text-gray-700 font-medium">لفقدان الوزن (0.5 كجم/أسبوع):</span>
-                    <strong id="moderateLossValue" class="text-orange-700 text-lg"></strong>
-                </div>
-                <div id="severeLoss" class="result-item flex justify-between items-center bg-red-50 p-3 rounded-md mb-3 border-r-4 border-red-400">
-                    <span class="text-gray-700 font-medium">لفقدان وزن سريع (1 كجم/أسبوع):</span>
-                    <strong id="severeLossValue" class="text-red-700 text-lg"></strong>
-                </div>
-                <div id="mildGain" class="result-item flex justify-between items-center bg-pink-50 p-3 rounded-md mb-3 border-r-4 border-pink-400">
-                    <span>لزيادة الوزن (0.5 كجم/أسبوع):</span>
-                    <strong id="mildGainValue" class="text-pink-700 text-lg"></strong>
-                </div>
-
-                <div id="aiAdviceSection" class="mt-8 p-6 bg-purple-50 rounded-xl border-2 border-purple-200 shadow-md">
-                    <h3 class="text-xl font-bold text-purple-800 mb-4 text-center flex items-center justify-center gap-2">
-                        💡 نصائح الذكاء الاصطناعي المخصصة لك:
-                    </h3>
-                    <div id="aiLoading" class="flex justify-center items-center gap-2 text-purple-600 hidden">
-                        <div class="spinner"></div>
-                        <span>جاري توليد النصائح...</span>
-                    </div>
-                    <div id="aiError" class="text-red-600 text-center hidden">
-                        عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.
-                    </div>
-                    <div id="aiAdviceContent" class="text-gray-700 leading-relaxed text-right">
-                        </div>
-                </div>
-
-                <p class="text-sm text-gray-500 mt-6 text-center">
-                    ⚠️ هذه الحسابات هي تقديرية. للحصول على خطة صحية شخصية، يرجى استشارة أخصائي تغذية أو طبيب.
-                </p>
-                <button id="goToAbdominalBtn" class="w-full p-4 mt-8 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg shadow-lg hover:from-gray-700 hover:to-gray-800 transition duration-300 transform hover:-translate-y-1">
-                    العودة لتمارين البطن 🔙
-                </button>
-            </div>
-        </div>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="animated-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
     </div>
 
+    <!-- الهيدر -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>صحتك</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#home">الرئيسية</a></li>
+                <li class="nav-item"><a href="#about">عن الأداة</a></li>
+                <li class="nav-item"><a href="#ai">الذكاء الاصطناعي</a></li>
+                <li class="nav-item"><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-container">
+        <!-- القسم البطولي -->
+        <section class="hero-section" id="home">
+            <h1 class="hero-title">🍎 أهلاً بك في صحتك</h1>
+            <p class="hero-subtitle">احسب السعرات الحرارية بذكاء واحصل على خطة تغذية مخصصة لك</p>
+            <button class="start-btn" onclick="scrollToForm()">ابدأ الآن 🚀</button>
+        </section>
+
+        <!-- نموذج حساب السعرات -->
+        <section class="form-container" id="calculator">
+            <h2 class="form-title">💻 حاسبة السعرات الذكية</h2>
+            <form id="calorieForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>👤 الجنس</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="male" required>
+                                <span>🚹 ذكر</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="female" required>
+                                <span>🚺 أنثى</span>
+                            </label>
+                        </div>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">🎂 العمر (بالسنوات)</label>
+                        <input type="number" id="age" name="age" min="1" max="120" required>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">📏 الطول (بالسنتيمتر)</label>
+                        <input type="number" id="height" name="height" min="100" max="250" required>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weight">⚖️ الوزن (بالكيلوغرام)</label>
+                        <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" required>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activity">🏃‍♂️ مستوى النشاط البدني</label>
+                        <select id="activity" name="activity" required>
+                            <option value="">اختر مستوى النشاط</option>
+                            <option value="sedentary">🪑 قليل النشاط (مكتبي)</option>
+                            <option value="light">🚶‍♂️ نشاط خفيف (1-3 أيام/أسبوع)</option>
+                            <option value="moderate">🏃‍♂️ متوسط النشاط (3-5 أيام/أسبوع)</option>
+                            <option value="active">🏋️‍♀️ نشيط جداً (6-7 أيام/أسبوع)</option>
+                            <option value="very_active">💪 نشيط للغاية (رياضي)</option>
+                        </select>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goal">🎯 الهدف</label>
+                        <select id="goal" name="goal" required>
+                            <option value="">اختر هدفك</option>
+                            <option value="maintain">⚖️ الحفاظ على الوزن</option>
+                            <option value="gain">🔼 زيادة الوزن</option>
+                            <option value="lose">🔽 خسارة الوزن</option>
+                        </select>
+                        <i class="fas fa-check check-mark"></i>
+                    </div>
+                </div>
+
+                <div class="control-buttons">
+                    <button type="submit" class="btn btn-primary">🧮 احسب السعرات</button>
+                    <button type="button" class="btn btn-ai" onclick="generateAIRecommendations()">🤖 اقتراحات ذكية</button>
+                    <button type="button" class="btn btn-reset" onclick="resetForm()">🔁 إعادة تعيين</button>
+                </div>
+            </form>
+
+            <!-- شاشة التحميل -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>جاري الحساب... 🔄</p>
+            </div>
+        </section>
+
+        <!-- النتائج -->
+        <section class="results-container" id="results">
+            <h2 class="results-title">📊 نتائجك الشخصية</h2>
+            <div class="results-grid" id="resultsGrid"></div>
+            
+            <!-- توصيات الذكاء الاصطناعي -->
+            <div class="ai-recommendations" id="aiRecommendations">
+                <h3 class="ai-title">
+                    <i class="fas fa-robot"></i>
+                    توصيات الذكاء الاصطناعي
+                </h3>
+                <div class="ai-content" id="aiContent"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- زر الوضع الليلي -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="الوضع الليلي">
+        🌙
+    </button>
+
     <script>
-        // Get references to HTML elements for pages
-        const abdominalExercisesPage = document.getElementById('abdominalExercisesPage');
-        const calorieCalculatorPage = document.getElementById('calorieCalculatorPage');
-        const goToCalculatorBtn = document.getElementById('goToCalculatorBtn');
-        const goToAbdominalBtn = document.getElementById('goToAbdominalBtn');
+        // متغيرات عامة
+        let isDarkMode = false;
+        let currentResults = null;
 
-        // Get references to HTML elements for calorie calculator
-        const calorieForm = document.getElementById('calorieForm');
-        const resultsDiv = document.getElementById('results');
-        const bmrValue = document.getElementById('bmrValue');
-        const maintenanceValue = document.getElementById('maintenanceValue');
-        const mildLossValue = document.getElementById('mildLossValue');
-        const moderateLossValue = document.getElementById('moderateLossValue');
-        const severeLossValue = document.getElementById('severeLossValue');
-        const mildGainValue = document.getElementById('mildGainValue');
-        const bmiValue = document.getElementById('bmiValue');
-        const aiAdviceSection = document.getElementById('aiAdviceSection');
-        const aiLoading = document.getElementById('aiLoading');
-        const aiError = document.getElementById('aiError');
-        const aiAdviceContent = document.getElementById('aiAdviceContent');
+        // التحقق من صحة النموذج
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('calorieForm');
+            const inputs = form.querySelectorAll('input, select');
 
-        // Function to show a specific page and hide others
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                if (page.id === pageId) {
-                    page.classList.remove('hidden');
-                } else {
-                    page.classList.add('hidden');
-                }
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    validateField(this);
+                });
+
+                input.addEventListener('input', function() {
+                    validateField(this);
+                });
             });
+
+            form.addEventListener('submit', handleFormSubmit);
+        });
+
+        function validateField(field) {
+            const formGroup = field.closest('.form-group');
+            
+            if (field.checkValidity() && field.value !== '') {
+                formGroup.classList.add('valid');
+            } else {
+                formGroup.classList.remove('valid');
+            }
         }
 
-        // Event listeners for page navigation buttons
-        goToCalculatorBtn.addEventListener('click', () => showPage('calorieCalculatorPage'));
-        goToAbdominalBtn.addEventListener('click', () => showPage('abdominalExercisesPage'));
-
-        // Initially show the abdominal exercises page
-        showPage('abdominalExercisesPage');
-
-        // Add event listener for calorie form submission
-        calorieForm.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Prevent default form submission (page reload)
+        function handleFormSubmit(e) {
+            e.preventDefault();
             
-            // Get input values from the calorie calculator form
-            const gender = document.getElementById('gender').value;
-            const age = parseFloat(document.getElementById('age').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value);
-            const activity = parseFloat(document.getElementById('activity').value);
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
             
-            // Calculate Basal Metabolic Rate (BMR) using Mifflin-St Jeor equation
-            // BMR: calories burned at rest to maintain basic bodily functions
+            // التحقق من صحة البيانات
+            if (!validateFormData(data)) {
+                alert('⚠️ يرجى التأكد من ملء جميع الحقول بشكل صحيح');
+                return;
+            }
+
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // محاكاة التأخير للحساب
+            setTimeout(() => {
+                const results = calculateCalories(data);
+                displayResults(results);
+                hideLoading();
+            }, 2000);
+        }
+
+        function validateFormData(data) {
+            return data.gender && 
+                   data.age && parseInt(data.age) > 0 && parseInt(data.age) <= 120 &&
+                   data.height && parseInt(data.height) >= 100 && parseInt(data.height) <= 250 &&
+                   data.weight && parseFloat(data.weight) >= 30 && parseFloat(data.weight) <= 300 &&
+                   data.activity && 
+                   data.goal;
+        }
+
+        function calculateCalories(data) {
+            const age = parseInt(data.age);
+            const height = parseInt(data.height);
+            const weight = parseFloat(data.weight);
+            const gender = data.gender;
+            const activity = data.activity;
+            const goal = data.goal;
+
+            // حساب BMR باستخدام معادلة Mifflin-St Jeor
             let bmr;
             if (gender === 'male') {
                 bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
             } else {
                 bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             }
+
+            // معاملات النشاط
+            const activityMultipliers = {
+                sedentary: 1.2,
+                light: 1.375,
+                moderate: 1.55,
+                active: 1.725,
+                very_active: 1.9
+            };
+
+            const maintenanceCalories = Math.round(bmr * activityMultipliers[activity]);
             
-            // Calculate total daily energy expenditure (TDEE) based on activity level
-            const maintenance = bmr * activity; // Calories to maintain current weight
+            // حساب السعرات حسب الهدف
+            let targetCalories;
+            let weeklyWeightChange;
             
-            // Calculate calorie targets for weight management
-            // Approximations based on 7700 calories per 1 kg of fat
-            const mildLoss = maintenance - 250; // ~0.25 kg/week loss
-            const moderateLoss = maintenance - 500; // ~0.5 kg/week loss
-            const severeLoss = maintenance - 1000; // ~1 kg/week loss (consult professional)
-            const mildGain = maintenance + 500; // ~0.5 kg/week gain
-            
-            // Calculate Body Mass Index (BMI)
-            // BMI = weight (kg) / (height (m))^2
+            switch(goal) {
+                case 'lose':
+                    targetCalories = maintenanceCalories - 500; // خسارة 0.5 كيلو أسبوعياً
+                    weeklyWeightChange = -0.5;
+                    break;
+                case 'gain':
+                    targetCalories = maintenanceCalories + 500; // زيادة 0.5 كيلو أسبوعياً
+                    weeklyWeightChange = 0.5;
+                    break;
+                default:
+                    targetCalories = maintenanceCalories;
+                    weeklyWeightChange = 0;
+            }
+
+            // حساب BMI
             const heightInMeters = height / 100;
-            const bmi = weight / (heightInMeters * heightInMeters);
-
-            // Display results
-            bmrValue.textContent = `${Math.round(bmr)} سعرة حرارية`;
-            maintenanceValue.textContent = `${Math.round(maintenance)} سعرة حرارية`;
-            mildLossValue.textContent = `${Math.round(mildLoss)} سعرة حرارية`;
-            moderateLossValue.textContent = `${Math.round(moderateLoss)} سعرة حرارية`;
-            severeLossValue.textContent = `${Math.round(severeLoss)} سعرة حرارية`;
-            mildGainValue.textContent = `${Math.round(mildGain)} سعرة حرارية`;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
             
-            // Display BMI with interpretation
-            let bmiInterpretation = '';
-            if (bmi < 18.5) {
-                bmiInterpretation = ' (نقص الوزن 📉)';
-            } else if (bmi >= 18.5 && bmi < 24.9) {
-                bmiInterpretation = ' (وزن صحي ✅)';
-            } else if (bmi >= 25 && bmi < 29.9) {
-                bmiInterpretation = ' (زيادة الوزن ⚠️)';
+            // تصنيف BMI
+            let bmiCategory;
+            if (bmi < 18.5) bmiCategory = "نحيف";
+            else if (bmi < 25) bmiCategory = "طبيعي";
+            else if (bmi < 30) bmiCategory = "زائد";
+            else bmiCategory = "سمنة";
+
+            // توزيع المغذيات الكبرى
+            const protein = Math.round((targetCalories * 0.25) / 4); // 25% بروتين
+            const carbs = Math.round((targetCalories * 0.45) / 4);   // 45% كربوهيدرات
+            const fats = Math.round((targetCalories * 0.30) / 9);   // 30% دهون
+
+            return {
+                bmr: Math.round(bmr),
+                maintenance: maintenanceCalories,
+                target: targetCalories,
+                bmi: bmi,
+                bmiCategory: bmiCategory,
+                weeklyChange: weeklyWeightChange,
+                macros: {
+                    protein: protein,
+                    carbs: carbs,
+                    fats: fats
+                },
+                userData: data
+            };
+        }
+
+        function displayResults(results) {
+            currentResults = results;
+            const resultsContainer = document.getElementById('results');
+            const resultsGrid = document.getElementById('resultsGrid');
+            
+            resultsGrid.innerHTML = `
+                <div class="result-card">
+                    <h3>🔥 السعرات اليومية المطلوبة</h3>
+                    <div class="result-value">${results.target}</div>
+                    <p>سعرة حرارية</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>⚖️ معدل الأيض الأساسي</h3>
+                    <div class="result-value">${results.bmr}</div>
+                    <p>سعرة حرارية</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>📏 مؤشر كتلة الجسم</h3>
+                    <div class="result-value">${results.bmi}</div>
+                    <p>${results.bmiCategory}</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>📈 التغيير الأسبوعي المتوقع</h3>
+                    <div class="result-value">${results.weeklyChange > 0 ? '+' : ''}${results.weeklyChange}</div>
+                    <p>كيلوغرام/أسبوع</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>🥩 البروتين اليومي</h3>
+                    <div class="result-value">${results.macros.protein}</div>
+                    <p>غرام</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>🍞 الكربوهيدرات اليومية</h3>
+                    <div class="result-value">${results.macros.carbs}</div>
+                    <p>غرام</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>🥑 الدهون اليومية</h3>
+                    <div class="result-value">${results.macros.fats}</div>
+                    <p>غرام</p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>💧 الماء المنصوح به</h3>
+                    <div class="result-value">${Math.round(parseFloat(results.userData.weight) * 35)}</div>
+                    <p>مل يومياً</p>
+                </div>
+            `;
+            
+            resultsContainer.style.display = 'block';
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateAIRecommendations() {
+            if (!currentResults) {
+                alert('⚠️ يرجى حساب السعرات أولاً للحصول على التوصيات الذكية');
+                return;
+            }
+
+            const aiContainer = document.getElementById('aiRecommendations');
+            const aiContent = document.getElementById('aiContent');
+            
+            const recommendations = getAIRecommendations(currentResults);
+            
+            aiContent.innerHTML = recommendations;
+            aiContainer.style.display = 'block';
+            
+            // تمرير سلس إلى التوصيات
+            setTimeout(() => {
+                aiContainer.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function getAIRecommendations(results) {
+            const goal = results.userData.goal;
+            const bmi = parseFloat(results.bmi);
+            const age = parseInt(results.userData.age);
+            
+            let recommendations = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">🎯 تحليل شخصي لحالتك:</h4>
+                    <p>بناءً على بياناتك، مؤشر كتلة جسمك هو ${results.bmi} (${results.bmiCategory}).</p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">🍽️ خطة التغذية المقترحة:</h4>
+                    <ul style="margin-right: 1rem;">
+                        <li>تناول ${Math.ceil(results.target/400)} إلى ${Math.ceil(results.target/300)} وجبات يومياً</li>
+                        <li>اشرب ${Math.round(parseFloat(results.userData.weight) * 35)} مل من الماء يومياً</li>
+                        <li>تناول ${results.macros.protein}غ بروتين موزعة على الوجبات</li>
+            `;
+
+            if (goal === 'lose') {
+                recommendations += `
+                        <li>ركز على الخضار والبروتين قليل الدهن</li>
+                        <li>قلل من السكريات والدهون المشبعة</li>
+                        <li>تناول وجبات صغيرة ومتكررة</li>
+                `;
+            } else if (goal === 'gain') {
+                recommendations += `
+                        <li>أضف وجبات خفيفة صحية بين الوجبات الرئيسية</li>
+                        <li>ركز على البروتين والكربوهيدرات المعقدة</li>
+                        <li>تناول المكسرات والأفوكادو</li>
+                `;
             } else {
-                bmiInterpretation = ' (سمنة 🚨)';
+                recommendations += `
+                        <li>حافظ على توازن المغذيات في كل وجبة</li>
+                        <li>تناول وجبات منتظمة في مواعيد ثابتة</li>
+                        <li>نوع في مصادر البروتين والخضار</li>
+                `;
             }
-            bmiValue.textContent = `${bmi.toFixed(2)}${bmiInterpretation}`;
 
-            resultsDiv.classList.remove('hidden'); // Show results section
+            recommendations += `
+                    </ul>
+                </div>
 
-            // --- AI Advice Generation ---
-            // Clear previous AI advice and show loading spinner
-            aiAdviceContent.innerHTML = '';
-            aiError.classList.add('hidden');
-            aiLoading.classList.remove('hidden');
-            aiAdviceSection.classList.remove('hidden'); // Ensure AI section is visible
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #27AE60; margin-bottom: 0.5rem;">💪 نصائح للنشاط البدني:</h4>
+                    <ul style="margin-right: 1rem;">
+            `;
 
-            try {
-                // Construct the prompt for the AI model
-                const prompt = `أنت خبير تغذية ولياقة بدنية. بناءً على المعلومات التالية، قدم نصائح شخصية وشاملة لنمط حياة صحي، مع التركيز على التغذية والتمارين الرياضية، بالإضافة إلى رسالة تحفيزية. اجعل النصائح مناسبة للشباب.
-                
-                معلومات المستخدم:
-                - الجنس: ${gender === 'male' ? 'ذكر' : 'أنثى'}
-                - العمر: ${age} سنة
-                - الوزن: ${weight} كجم
-                - الطول: ${height} سم
-                - مستوى النشاط: ${document.getElementById('activity').options[document.getElementById('activity').selectedIndex].text.split('(')[0].trim()} (معامل ${activity})
-                - مؤشر كتلة الجسم (BMI): ${bmi.toFixed(2)} ${bmiInterpretation}
-                - معدل الأيض الأساسي (BMR): ${Math.round(bmr)} سعرة حرارية
-                - سعرات الحفاظ على الوزن: ${Math.round(maintenance)} سعرة حرارية
-                - سعرات فقدان وزن خفيف (0.25 كجم/أسبوع): ${Math.round(mildLoss)} سعرة حرارية
-                - سعرات فقدان الوزن (0.5 كجم/أسبوع): ${Math.round(moderateLoss)} سعرة حرارية
-                - سعرات فقدان وزن سريع (1 كجم/أسبوع): ${Math.round(severeLoss)} سعرة حرارية
-                - سعرات زيادة الوزن (0.5 كجم/أسبوع): ${Math.round(mildGain)} سعرة حرارية
-
-                قدم نصائحك في الأقسام التالية:
-                1.  **نظرة عامة على صحتك:** تحليل موجز لوضعهم بناءً على BMI والسعرات الحرارية.
-                2.  **نصائح التغذية:** بناءً على سعرات الحفاظ على الوزن وفقدان/زيادة الوزن.
-                3.  **نصائح التمارين:** توصيات عامة للنشاط البدني.
-                4.  **رسالة تحفيزية:** تشجيع على الاستمرارية.
-                
-                اجعل الرد موجزًا وواضحًا ومقسمًا إلى نقاط باستخدام تنسيق Markdown.`;
-
-                // Prepare chat history for the API call
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-                const payload = { contents: chatHistory };
-                const apiKey = ""; // API key will be provided by the Canvas environment
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                // Make the API call to Gemini
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json(); // Parse the JSON response
-
-                // Check if the response contains valid content
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const aiText = result.candidates[0].content.parts[0].text;
-                    aiAdviceContent.innerHTML = formatMarkdownToHtml(aiText); // Display AI advice
-                } else {
-                    aiError.classList.remove('hidden'); // Show error if no content
-                    console.error('AI response structure unexpected:', result);
-                }
-
-            } catch (error) {
-                aiError.classList.remove('hidden'); // Show error on API call failure
-                console.error('Error fetching AI advice:', error);
-            } finally {
-                aiLoading.classList.add('hidden'); // Hide loading spinner
+            if (results.userData.activity === 'sedentary') {
+                recommendations += `
+                        <li>ابدأ بالمشي 20-30 دقيقة يومياً</li>
+                        <li>اصعد الدرج بدلاً من المصعد</li>
+                        <li>قم بتمارين إطالة كل ساعتين</li>
+                `;
+            } else {
+                recommendations += `
+                        <li>حافظ على نشاطك الحالي واعمل على تطويره</li>
+                        <li>أضف تمارين القوة 2-3 مرات أسبوعياً</li>
+                        <li>نوع في أنواع التمارين لتجنب الملل</li>
+                `;
             }
+
+            recommendations += `
+                    </ul>
+                </div>
+
+                <div style="background: #F0F9FF; padding: 1rem; border-radius: 10px; border-right: 4px solid #3498DB;">
+                    <h4 style="color: #2980B9; margin-bottom: 0.5rem;">📚 نصيحة إضافية:</h4>
+                    <p>احتفظ بمذكرة طعام لمدة أسبوع لتتبع تقدمك، واستشر أخصائي تغذية للحصول على خطة مخصصة أكثر تفصيلاً.</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button onclick="downloadPDF()" style="background: linear-gradient(45deg, #27AE60, #2ECC71); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: 600; cursor: pointer;">
+                        📄 تحميل التقرير كملف PDF
+                    </button>
+                </div>
+            `;
+
+            return recommendations;
+        }
+
+        function downloadPDF() {
+            // محاكاة تحميل PDF
+            alert('🔄 جاري إنشاء التقرير... سيتم التحميل قريباً!');
+            
+            // في التطبيق الحقيقي، ستقوم بإنشاء PDF هنا
+            setTimeout(() => {
+                alert('✅ تم إنشاء التقرير بنجاح! (في النسخة الحقيقية سيتم التحميل تلقائياً)');
+            }, 2000);
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('aiRecommendations').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function resetForm() {
+            document.getElementById('calorieForm').reset();
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('aiRecommendations').style.display = 'none';
+            
+            // إزالة علامات التحقق
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('valid');
+            });
+            
+            currentResults = null;
+            
+            // التمرير إلى أعلى النموذج
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToForm() {
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const toggle = document.querySelector('.dark-mode-toggle');
+            
+            if (isDarkMode) {
+                body.style.filter = 'invert(1) hue-rotate(180deg)';
+                toggle.innerHTML = '☀️';
+                toggle.title = 'الوضع النهاري';
+            } else {
+                body.style.filter = 'none';
+                toggle.innerHTML = '🌙';
+                toggle.title = 'الوضع الليلي';
+            }
+        }
+
+        // تأثيرات إضافية
+        document.addEventListener('mousemove', function(e) {
+            const waves = document.querySelectorAll('.wave');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            waves.forEach((wave, index) => {
+                const speed = (index + 1) * 0.02;
+                const x = mouseX * speed * 50;
+                const y = mouseY * speed * 50;
+                
+                wave.style.transform = `translate(${x}px, ${y}px)`;
+            });
         });
 
-        // Helper function to convert basic markdown to HTML for display
-        function formatMarkdownToHtml(markdownText) {
-            let html = markdownText;
-            // Convert bold text
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            // Convert headings (assuming ## or ### for simplicity, can be expanded)
-            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-            // Convert lists
-            html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
-            html = html.replace(/^(?!<li|<\/li>)(.+)$/gim, '<p>$1</p>'); // Wrap remaining lines in paragraphs
+        // رسائل تحفيزية عشوائية
+        const motivationalMessages = [
+            "💪 أنت على الطريق الصحيح نحو صحة أفضل!",
+            "🌟 كل خطوة صغيرة تقربك من هدفك!",
+            "🔥 استمر في المحاولة، النتائج قادمة!",
+            "🎯 التركيز والصبر مفتاح النجاح!",
+            "💚 صحتك هي أغلى استثمار!"
+        ];
 
-            // Basic cleanup for markdown list conversion
-            html = html.replace(/<\/li>\n<li>/g, '</li><li>');
-            html = html.replace(/<\/ul><ul>/g, ''); // Prevent multiple ul tags if markdown has multiple lists
-
-            // Replace newlines with <br> for general text, but not inside block elements
-            html = html.replace(/(?<!<\/h[1-6]>)(?<!<\/li>)(?<!<\/p>)\n(?!<h[1-6]>)(?!<li>)(?!<p>)/g, '<br>');
-
-            return html;
+        function showMotivationalMessage() {
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            
+            // إنشاء عنصر الرسالة
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = randomMessage;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #27AE60, #2ECC71);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 25px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.5s ease, slideOut 0.5s ease 3s forwards;
+                font-weight: 600;
+            `;
+            
+            document.body.appendChild(messageDiv);
+            
+            // إزالة الرسالة بعد 3.5 ثانية
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3500);
         }
+
+        // إضافة الأنيميشن للرسائل التحفيزية
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // إظهار رسالة تحفيزية عند حساب السعرات
+        document.getElementById('calorieForm').addEventListener('submit', function() {
+            setTimeout(showMotivationalMessage, 1000);
+        });
     </script>
 </body>
 </html>
