@@ -3,960 +3,422 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سفر جو - وكالة سفر</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>💪 تطبيق اللياقة البدنية الاحترافي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Base styles for Inter font and background */
+        /* Custom styles for gradients, shadows, and fonts */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-            /* Default to RTL for Arabic, will be toggled by JS */
-            direction: rtl;
-        }
-
-        /* Styling for WhatsApp button */
-        .whatsapp-button {
-            background-color: #25D366;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 9999px; /* Fully rounded */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            white-space: nowrap; /* Prevent text wrapping */
-            text-decoration: none; /* Remove underline from links */
-        }
-        .whatsapp-button:hover {
-            background-color: #1DA851;
-        }
-        /* RTL specific margin for WhatsApp icon */
-        .rtl .whatsapp-icon {
-            margin-left: 8px;
-            margin-right: 0;
-        }
-        /* LTR specific margin for WhatsApp icon */
-        .ltr .whatsapp-icon {
-            margin-right: 8px;
-            margin-left: 0;
-        }
-
-        /* Card styling for destination boxes */
-        .card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            border-radius: 1rem; /* rounded-xl */
-            overflow: hidden;
-            display: flex; /* Use flexbox for card content */
-            flex-direction: column; /* Stack content vertically */
-            justify-content: space-between; /* Push button to bottom */
-            position: relative; /* Needed for absolute positioning of price */
-            min-height: 420px; /* Ensure consistent card height */
-        }
-        .card-image {
-            width: 100%;
-            height: 200px; /* Fixed height for consistency */
-            object-fit: cover; /* Cover the area, crop if necessary */
-            border-radius: 0.75rem; /* rounded-lg */
-            margin-bottom: 1rem;
-        }
-        .card-content {
-            flex-grow: 1; /* Allow content to take available space */
-            padding: 0 1rem; /* Add horizontal padding to content */
-        }
-
-        /* Hero section background and text styling */
-        .hero-section {
-            background: linear-gradient(to right, #0A1128, #1F4172); /* Adjusted blue gradient */
-            color: white;
-            padding: 5rem 1rem; /* Increased vertical padding for more impact */
-            text-align: center;
-        }
-        .hero-section h1 {
-            font-size: 3.5rem; /* Larger heading */
-            line-height: 1.2;
-        }
-        .hero-section p {
-            font-size: 1.25rem; /* Slightly larger subtitle */
-        }
-        .hero-section a {
-            padding: 1rem 3rem; /* Larger button */
-            font-size: 1.1rem;
-        }
-
-        /* Footer styling */
-        .footer {
-            background-color: #0A1128; /* Consistent dark blue */
-            color: white;
-            padding: 2rem 1rem; /* Add horizontal padding for mobile */
-            text-align: center;
-        }
-
-        /* Responsive adjustments for RTL/LTR */
-        /* Default RTL margins */
-        .rtl .mr-3 { margin-right: 0.75rem; margin-left: 0; }
-        .rtl .ml-2 { margin-left: 0.5rem; margin-right: 0; }
-        .rtl .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
-            --tw-space-x-reverse: 1;
-        }
-
-        /* LTR overrides */
-        .ltr .mr-3 { margin-left: 0.75rem; margin-right: 0; }
-        .ltr .ml-2 { margin-right: 0.5rem; margin-left: 0; }
-        .ltr .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
-            --tw-space-x-reverse: 0;
-        }
-        .ltr .text-right { text-align: left; }
-        .ltr .text-left { text-align: right; }
-
-        /* Mobile navigation toggle */
-        .mobile-menu-button {
-            display: none; /* Hidden by default on larger screens */
-        }
-
-        @media (max-width: 768px) { /* Adjust breakpoint for mobile */
-            .mobile-menu-button {
-                display: block; /* Show on mobile */
-            }
-            .main-nav {
-                display: none; /* Hide main nav on mobile by default */
-                flex-direction: column;
-                width: 100%;
-                position: absolute;
-                top: 64px; /* Height of header */
-                /* Adjust for RTL/LTR */
-                right: 0;
-                left: auto;
-                background-color: white;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                z-index: 10;
-                padding: 1rem 0;
-            }
-            .main-nav.active {
-                display: flex; /* Show when active */
-            }
-            .main-nav ul {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-            }
-            .main-nav ul li {
-                width: 100%;
-                text-align: center;
-                padding: 0.5rem 0;
-            }
-            .main-nav ul li a {
-                display: block;
-                padding: 0.5rem 1rem;
-            }
-            .header-content {
-                flex-wrap: wrap; /* Allow header items to wrap */
-                justify-content: space-between; /* Space out items */
-            }
-            .language-switcher {
-                margin-top: 1rem; /* Add margin on mobile */
-                width: 100%;
-                text-align: center;
-            }
-            .language-switcher button {
-                width: 80%; /* Make button wider on mobile */
-            }
-            /* Adjust mobile menu position for LTR */
-            .ltr .main-nav {
-                left: 0;
-                right: auto;
-            }
-            .hero-section h1 {
-                font-size: 2.5rem; /* Smaller heading on mobile */
-            }
-            .hero-section p {
-                font-size: 1rem; /* Smaller subtitle on mobile */
-            }
-        }
-
-        /* Floating WhatsApp Button Specific Styles */
-        .floating-whatsapp-button {
-            position: fixed;
-            bottom: 20px;
-            /* Default to right for RTL */
-            right: 20px;
-            left: auto; /* Ensure left is auto for RTL */
-            background-color: #25D366;
-            color: white;
-            padding: 15px;
-            border-radius: 50%; /* Circular shape */
-            font-size: 1.8rem; /* Larger icon */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 100; /* Ensure it's on top */
+            font-family: 'Inter', sans-serif; /* Using Inter font for a modern look */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple gradient */
+            min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        .floating-whatsapp-button:hover {
-            background-color: #1DA851;
-            transform: scale(1.1); /* Slightly enlarge on hover */
-        }
-        /* Adjust for LTR direction */
-        .ltr .floating-whatsapp-button {
-            left: 20px;
-            right: auto;
-        }
-
-        /* Price tag styling */
-        .price-tag {
-            position: absolute;
-            top: 0.75rem; /* 12px from top */
-            /* Default to right for RTL */
-            right: 0.75rem;
-            left: auto; /* Ensure left is auto for RTL */
-            background-color: rgba(250, 204, 21, 0.9); /* Yellow-400 with transparency */
-            color: #1a202c; /* Dark text for contrast */
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 5; /* Above image, below text */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        /* Adjust for LTR direction */
-        .ltr .price-tag {
-            left: 0.75rem;
-            right: auto;
-        }
-
-        /* Contact section specific styling */
-        .contact-info-item {
-            display: flex;
             align-items: center;
-            justify-content: center; /* Center horizontally */
-            background-color: #e2e8f0; /* Light gray background */
-            padding: 1rem;
-            border-radius: 0.75rem; /* rounded-lg */
-            width: 100%; /* Full width on small screens */
-            max-width: 400px; /* Max width for larger screens */
-            margin: 0.5rem auto; /* Center with margin */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, background-color 0.3s ease;
+            padding: 20px;
+            overflow-y: auto; /* Allow scrolling for content that exceeds viewport height */
         }
-        .contact-info-item:hover {
-            transform: translateY(-3px);
-            background-color: #d1d9e6; /* Slightly darker on hover */
-        }
-        /* Default RTL icon margin */
-        .rtl .contact-info-item i {
-            font-size: 1.5rem;
-            color: #0A1128; /* Dark blue icon color */
-            margin-left: 1rem; /* Space between icon and text for RTL */
-            margin-right: 0;
-        }
-        /* LTR icon margin override */
-        .ltr .contact-info-item i {
-            margin-right: 1rem;
-            margin-left: 0;
-        }
-        .contact-info-item span {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-        }
-        .contact-info-item a {
-            text-decoration: none; /* Remove underline from links */
-        }
-
-        /* Specific styles for contact buttons to make them more prominent */
-        .contact-button-phone {
-            background-color: #1F4172; /* Secondary blue */
-            color: white;
-        }
-        .contact-button-phone:hover {
-            background-color: #0A1128; /* Darker blue on hover */
-        }
-        .contact-button-email {
-            background-color: #FACC15; /* Accent yellow */
-            color: #1a202c; /* Dark text */
-        }
-        .contact-button-email:hover {
-            background-color: #eab308; /* Darker yellow on hover */
-        }
-        .contact-button-whatsapp-main {
-            background-color: #22c55e; /* Green-500 */
-            color: white;
-        }
-        .contact-button-whatsapp-main:hover {
-            background-color: #16a34a; /* Green-600 */
-        }
-
-        /* AI Trip Planner Section Styles */
-        .ai-planner-section {
-            background-color: #f8fafc; /* Light blue-gray */
-            padding: 4rem 1rem;
-            text-align: center;
-            border-radius: 1rem;
-            margin-top: 2rem;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-        .ai-planner-section h2 {
-            color: #0A1128; /* Dark blue heading */
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-        }
-        .ai-planner-section textarea {
-            width: 100%;
-            max-width: 600px;
-            min-height: 120px;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 2px solid #cbd5e0; /* Gray-300 */
-            resize: vertical;
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .ai-planner-section button {
-            background-color: #FACC15; /* Yellow-400 */
-            color: #1a202c; /* Dark text */
-            padding: 1rem 2.5rem;
-            border-radius: 9999px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-        .ai-planner-section button:hover {
-            background-color: #eab308; /* Yellow-500 */
-            transform: translateY(-2px);
-        }
-        .ai-response {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 2rem auto 0;
-            /* Default to right for Arabic */
-            text-align: right;
-            line-height: 1.8;
-            color: #333;
-            border: 1px solid #e2e8f0;
-            white-space: pre-wrap; /* Preserve whitespace and line breaks */
-        }
-        /* LTR override for AI response text alignment */
-        .ltr .ai-response {
-            text-align: left;
-        }
-        .ai-response h3 {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #0A1128; /* Dark blue heading */
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        .ai-response p {
-            margin-bottom: 1rem;
-        }
-        .ai-response strong {
-            color: #0A1128; /* Dark blue for strong text */
-        }
-        .loading-indicator {
+        /* Hide scrollbar for a cleaner look */
+        body::-webkit-scrollbar {
             display: none;
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            color: #4a5568;
         }
-        .loading-indicator.active {
-            display: block;
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Custom spinner animation */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #667eea;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="rtl">
-    <header class="bg-white shadow-md py-4">
-        <div class="container mx-auto flex items-center px-4 header-content">
-            <div class="flex items-center flex-grow">
-                <img src="https://i.imgur.com/zRLFc0j_d.png?maxwidth=520&shape=thumb&fidelity=high" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0A1128/FFFFFF?text=SafarGo+Logo';" alt="SafarGo Logo" class="h-12 w-auto rounded-lg">
-                <span class="text-2xl font-bold text-blue-900 mr-3" id="company-name">Safar Go</span>
+<body class="bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center p-4">
+    <div class="container bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full">
+        <div id="abdominalExercisesPage" class="page">
+            <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8 flex items-center justify-center gap-2">
+                💪 تمارين البطن <span class="text-indigo-500">لشباب أقوى</span>
+            </h1>
+
+            <p class="text-center text-gray-600 mb-8">
+                ابدأ رحلتك نحو بطن مشدودة وقوية مع هذه التمارين الفعالة!
+            </p>
+
+            <div class="grid grid-cols-1 gap-6">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-indigo-400">
+                    <img src="https://placehold.co/80x80/E0E7FF/4F46E5?text=CR" alt="تمرين الكرش" class="rounded-full w-20 h-20 object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين الكرش (Crunches) 🤸‍♂️</h3>
+                        <p class="text-gray-600 text-sm">
+                            تمرين أساسي يستهدف عضلات البطن العلوية. استلقِ على ظهرك، اثنِ ركبتيك، ارفع جذعك نحو ركبتيك.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-purple-400">
+                    <img src="https://placehold.co/80x80/EDE9FE/7C3AED?text=PL" alt="تمرين البلانك" class="rounded-full w-20 h-20 object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين البلانك (Plank) ⏱️</h3>
+                        <p class="text-gray-600 text-sm">
+                            يقوي الجسم بالكامل، خاصة عضلات البطن والظهر. حافظ على جسمك مستقيماً مثل اللوح الخشبي.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-green-400">
+                    <img src="https://placehold.co/80x80/D1FAE5/10B981?text=LR" alt="رفع الساقين" class="rounded-full w-20 h-20 object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">رفع الساقين (Leg Raises) 🦵</h3>
+                        <p class="text-gray-600 text-sm">
+                            يستهدف عضلات البطن السفلية. استلقِ على ظهرك وارفع ساقيك معاً ببطء.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-yellow-400">
+                    <img src="https://placehold.co/80x80/FFFBEB/F59E0B?text=RT" alt="التويست الروسي" class="rounded-full w-20 h-20 object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">التويست الروسي (Russian Twists) 🔄</h3>
+                        <p class="text-gray-600 text-sm">
+                            يقوي عضلات البطن الجانبية (المائلة). اجلس على الأرض، ارفع قدميك قليلاً، ولف جذعك من جانب لآخر.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center gap-4 border-r-4 border-red-400">
+                    <img src="https://placehold.co/80x80/FEE2E2/EF4444?text=BC" alt="تمرين الدراجة" class="rounded-full w-20 h-20 object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">تمرين الدراجة (Bicycle Crunches) 🚴</h3>
+                        <p class="text-gray-600 text-sm">
+                            تمرين شامل للبطن يستهدف العضلات العلوية والسفلية والمائلة. حرك ساقيك كأنك تقود دراجة.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <button id="mobile-menu-button" class="mobile-menu-button text-blue-700 focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
+            <button id="goToCalculatorBtn" class="w-full p-4 mt-8 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:from-indigo-700 hover:to-purple-800 transition duration-300 transform hover:-translate-y-1">
+                انتقل إلى حاسبة السعرات الحرارية ✨
             </button>
+        </div>
 
-            <nav class="main-nav" id="main-nav">
-                <ul class="flex space-x-4 space-x-reverse md:flex-row">
-                    <li><a href="#home" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="home">الرئيسية</a></li>
-                    <li><a href="#destinations" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="destinations">الوجهات</a></li>
-                    <li><a href="#ai-planner" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="aiPlanner">مخطط الرحلات بالذكاء الاصطناعي</a></li>
-                    <li><a href="#about" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="about">عنا</a></li>
-                    <li><a href="#contact" class="text-blue-700 hover:text-blue-900 font-semibold" data-lang-key="contact">اتصل بنا</a></li>
-                </ul>
-            </nav>
+        <div id="calorieCalculatorPage" class="page hidden">
+            <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8 flex items-center justify-center gap-2">
+                🔥 حاسبة السعرات الحرارية <span class="text-indigo-500">الاحترافية</span>
+            </h1>
+            
+            <form id="calorieForm" class="space-y-6">
+                <div class="form-group">
+                    <label for="gender" class="block text-gray-700 font-semibold mb-2">
+                        🚻 الجنس:
+                    </label>
+                    <select id="gender" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300">
+                        <option value="">اختر الجنس</option>
+                        <option value="male">ذكر ♂️</option>
+                        <option value="female">أنثى ♀️</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age" class="block text-gray-700 font-semibold mb-2">
+                        🎂 العمر (سنة):
+                    </label>
+                    <input type="number" id="age" min="15" max="80" required 
+                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
+                           placeholder="مثال: 25">
+                </div>
+                
+                <div class="form-group">
+                    <label for="weight" class="block text-gray-700 font-semibold mb-2">
+                        ⚖️ الوزن (كيلوجرام):
+                    </label>
+                    <input type="number" id="weight" min="30" max="300" step="0.1" required 
+                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
+                           placeholder="مثال: 70.5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="height" class="block text-gray-700 font-semibold mb-2">
+                        📏 الطول (سنتيمتر):
+                    </label>
+                    <input type="number" id="height" min="140" max="220" required 
+                           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300"
+                           placeholder="مثال: 175">
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity" class="block text-gray-700 font-semibold mb-2">
+                        🏃 مستوى النشاط:
+                    </label>
+                    <select id="activity" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 transition duration-300">
+                        <option value="">اختر مستوى النشاط</option>
+                        <option value="1.2">قليل الحركة (لا توجد تمارين) 🛋️</option>
+                        <option value="1.375">نشاط خفيف (تمارين خفيفة 1-3 أيام/أسبوع) 🚶</option>
+                        <option value="1.55">نشاط متوسط (تمارين معتدلة 3-5 أيام/أسبوع) 🏋️</option>
+                        <option value="1.725">نشاط عالي (تمارين شاقة 6-7 أيام/أسبوع) 🏃‍♂️</option>
+                        <option value="1.9">نشاط فائق (تمارين صعبة جداً أو عمل جسدي) 🚀</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full p-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:from-indigo-700 hover:to-purple-800 transition duration-300 transform hover:-translate-y-1">
+                    احسب السعرات الحرارية ✨
+                </button>
+            </form>
+            
+            <div id="results" class="results mt-8 p-6 bg-gray-50 rounded-xl shadow-inner hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">📊 النتائج:</h2>
+                
+                <div id="bmi" class="result-item flex justify-between items-center bg-blue-50 p-3 rounded-md mb-3 border-r-4 border-blue-400">
+                    <span class="text-gray-700 font-medium">مؤشر كتلة الجسم (BMI):</span>
+                    <strong id="bmiValue" class="text-blue-700 text-lg"></strong>
+                </div>
 
-            <div class="language-switcher mr-4 md:mr-0">
-                <button id="lang-toggle" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-300 transition duration-300">English</button>
+                <div id="bmr" class="result-item flex justify-between items-center bg-blue-50 p-3 rounded-md mb-3 border-r-4 border-blue-400">
+                    <span class="text-gray-700 font-medium">معدل الأيض الأساسي (BMR):</span>
+                    <strong id="bmrValue" class="text-blue-700 text-lg"></strong>
+                </div>
+                <div id="maintenance" class="result-item flex justify-between items-center bg-green-50 p-3 rounded-md mb-3 border-r-4 border-green-400">
+                    <span class="text-gray-700 font-medium">للحفاظ على الوزن:</span>
+                    <strong id="maintenanceValue" class="text-green-700 text-lg"></strong>
+                </div>
+                <div id="mildLoss" class="result-item flex justify-between items-center bg-yellow-50 p-3 rounded-md mb-3 border-r-4 border-yellow-400">
+                    <span class="text-gray-700 font-medium">لفقدان وزن خفيف (0.25 كجم/أسبوع):</span>
+                    <strong id="mildLossValue" class="text-yellow-700 text-lg"></strong>
+                </div>
+                <div id="moderateLoss" class="result-item flex justify-between items-center bg-orange-50 p-3 rounded-md mb-3 border-r-4 border-orange-400">
+                    <span class="text-gray-700 font-medium">لفقدان الوزن (0.5 كجم/أسبوع):</span>
+                    <strong id="moderateLossValue" class="text-orange-700 text-lg"></strong>
+                </div>
+                <div id="severeLoss" class="result-item flex justify-between items-center bg-red-50 p-3 rounded-md mb-3 border-r-4 border-red-400">
+                    <span class="text-gray-700 font-medium">لفقدان وزن سريع (1 كجم/أسبوع):</span>
+                    <strong id="severeLossValue" class="text-red-700 text-lg"></strong>
+                </div>
+                <div id="mildGain" class="result-item flex justify-between items-center bg-pink-50 p-3 rounded-md mb-3 border-r-4 border-pink-400">
+                    <span>لزيادة الوزن (0.5 كجم/أسبوع):</span>
+                    <strong id="mildGainValue" class="text-pink-700 text-lg"></strong>
+                </div>
+
+                <div id="aiAdviceSection" class="mt-8 p-6 bg-purple-50 rounded-xl border-2 border-purple-200 shadow-md">
+                    <h3 class="text-xl font-bold text-purple-800 mb-4 text-center flex items-center justify-center gap-2">
+                        💡 نصائح الذكاء الاصطناعي المخصصة لك:
+                    </h3>
+                    <div id="aiLoading" class="flex justify-center items-center gap-2 text-purple-600 hidden">
+                        <div class="spinner"></div>
+                        <span>جاري توليد النصائح...</span>
+                    </div>
+                    <div id="aiError" class="text-red-600 text-center hidden">
+                        عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.
+                    </div>
+                    <div id="aiAdviceContent" class="text-gray-700 leading-relaxed text-right">
+                        </div>
+                </div>
+
+                <p class="text-sm text-gray-500 mt-6 text-center">
+                    ⚠️ هذه الحسابات هي تقديرية. للحصول على خطة صحية شخصية، يرجى استشارة أخصائي تغذية أو طبيب.
+                </p>
+                <button id="goToAbdominalBtn" class="w-full p-4 mt-8 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg shadow-lg hover:from-gray-700 hover:to-gray-800 transition duration-300 transform hover:-translate-y-1">
+                    العودة لتمارين البطن 🔙
+                </button>
             </div>
         </div>
-    </header>
-
-    <section id="home" class="hero-section">
-        <div class="container mx-auto">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-lang-key="heroTitle">اكتشف العالم مع سفر جو</h1>
-            <p class="text-lg md:text-xl mb-8" data-lang-key="heroSubtitle">خطط لرحلتك المثالية معنا. مغامرات لا تُنسى في انتظارك!</p>
-            <a href="#destinations" class="bg-yellow-400 text-blue-900 px-8 py-3 rounded-full text-lg font-bold hover:bg-yellow-500 transition duration-300" data-lang-key="exploreButton">استكشف وجهاتنا</a>
-        </div>
-    </section>
-
-    <section id="destinations" class="py-12 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-10" data-lang-key="ourDestinations">وجهاتنا المميزة</h2>
-
-            <h3 class="text-2xl md:text-3xl font-semibold text-blue-800 mb-6 text-center" data-lang-key="europeTitle">أوروبا</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card bg-white p-6">
-                    <div class="price-tag" data-lang-key="parisPrice">تبدأ من 2800 درهم</div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/2344/cars-france-landmark-lights.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باريس';" alt="صورة لبرج إيفل في باريس" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="parisTitle">باريس، فرنسا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="parisDesc">مدينة النور والرومانسية، برج إيفل، قوس النصر، متحف اللوفر.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/753339/pexels-photo-753339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=سوتشي';" alt="صورة لحديقة سوتشي الأولمبية" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="sochiTitle">سوتشي، روسيا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="sochiDesc">مدينة ساحلية جميلة على البحر الأسود، تشتهر بمنتجعاتها وشواطئها وحديقتها الأولمبية.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/2225443/pexels-photo-2225443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=روما';" alt="صورة للكولوسيوم في روما" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="romeTitle">روما، إيطاليا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="romeDesc">مدينة التاريخ العظيم، الكولوسيوم، الفاتيكان.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/1029021/pexels-photo-1029021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=سانتوريني';" alt="صورة لقرية أويا في سانتوريني" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="santoriniTitle">سانتوريني، اليونان</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="santoriniDesc">جزر خلابة، مناظر غروب الشمس الساحرة من قرية أويا.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/13295253/pexels-photo-13295253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=لندن';" alt="صورة لساعة بيج بن في لندن" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="londonTitle">لندن، المملكة المتحدة</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="londonDesc">مدينة ملكية نابضة بالحياة، بيج بن، قصر باكنغهام.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/208733/pexels-photo-208733.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=امستردام';" alt="صورة لقنوات أمستردام" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="amsterdamTitle">أمستردام، هولندا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="amsterdamDesc">قنوات جميلة، متاحف عالمية، ثقافة فريدة.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="text-2xl md:text-3xl font-semibold text-blue-800 mb-6 mt-12 text-center" data-lang-key="asiaTitle">آسيا</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card bg-white p-6">
-                    <div class="price-tag" data-lang-key="azerbaijanPrice">تبدأ من 1999 درهم</div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/29968179/pexels-photo-29968179/free-photo-of-hiker-enjoying-scenic-mountain-view-in-qusar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=باكو';" alt="صورة لأبراج اللهب في باكو، أذربيجان" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="azerbaijanTitle">أذربيجان</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="azerbaijanDesc">باكو: مدينة الأضواء، أبراج اللهب، المدينة القديمة.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/3733565/pexels-photo-3733565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=ماليزيا';" alt="صورة لأبراج بتروناس في ماليزيا" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="malaysiaTitle">ماليزيا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="malaysiaDesc">كوالا لامبور - بينانج - لنكاوي: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=فيتنام';" alt="صورة لخليج ها لونج في فيتنام" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="vietnamTitle">فيتنام</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="vietnamDesc">هانوي - نينه بينه - سابا - خليج هالونغ: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://kazguidedtours.com/img/t3/Big%20Almaty%20Lake_1.jpeg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A78BFA/FFFFFF?text=كازاخستان';" alt="صورة لمدينة ألماتي في كازاخستان" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="kazakhstanTitle">كازاخستان</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="kazakhstanDesc">الماتي: مواصلات، طيران مباشر، إفطار يومي، فنادق، جولات سياحية.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-                <div class="card bg-white p-6">
-                    <div class="price-tag price-dynamic" data-lang-key="dynamicPrice"></div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=بالي';" alt="صورة لمعبد تاناه لوط في بالي" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="baliTitle">بالي، إندونيسيا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="baliDesc">جنة استوائية، شواطئ، معابد، غابات.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="text-2xl md:text-3xl font-semibold text-blue-800 mb-6 mt-12 text-center" data-lang-key="additionalDestinationsTitle">وجهات إضافية</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card bg-white p-6">
-                    <div class="price-tag" data-lang-key="turkeyPrice">تبدأ من 1800 درهم</div>
-                    <div class="card-content">
-                        <img src="https://images.pexels.com/photos/3214994/pexels-photo-3214994.jpeg?auto=compress&cs=tinysrgb&w=600" onerror="this.onerror=null;this.src='https://placehold.co/600x400/10B981/FFFFFF?text=اسطنبول';" alt="صورة لآيا صوفيا في اسطنبول" class="card-image">
-                        <h4 class="text-xl font-bold text-blue-800 mb-2" data-lang-key="turkeyTitle">اسطنبول، تركيا</h4>
-                        <p class="text-gray-700 text-sm mb-4" data-lang-key="turkeyDesc">مزيج من الثقافات الشرقية والغربية، آيا صوفيا، البازار الكبير، البوسفور.</p>
-                    </div>
-                    <div class="flex justify-center mt-auto">
-                        <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-sm" data-lang-key="whatsappButton">
-                            <i class="fab fa-whatsapp whatsapp-icon"></i>
-                            تواصل عبر واتساب
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="ai-planner" class="ai-planner-section container mx-auto px-4">
-        <h2 data-lang-key="aiPlannerTitle">✨خطط لرحلتك المثالية بالذكاء الاصطناعي✨</h2>
-        <p class="text-lg text-gray-700 mb-6" data-lang-key="aiPlannerSubtitle">
-            أخبرنا عن أحلامك في السفر! ما هي اهتماماتك؟ ما هي ميزانيتك؟ وكم المدة التي تخطط لرحلتك؟
-            دع الذكاء الاصطناعي يقترح لك وجهة وأنشطة لا تُنسى.
-        </p>
-        <textarea id="ai-trip-input" placeholder="مثال: أرغب في رحلة استرخاء لمدة أسبوع، بميزانية متوسطة، وأحب الشواطئ والطبيعة الخلابة."></textarea>
-        <button id="ai-suggest-button" data-lang-key="aiSuggestButton">✨اقتراح رحلة✨</button>
-        <div id="loading-indicator" class="loading-indicator" data-lang-key="aiLoading">جاري تجهيز رحلتك المثالية...</div>
-        <div id="ai-response-output" class="ai-response hidden">
-            <h3 data-lang-key="aiResponseHeading">اقتراح رحلتك من سفر جو:</h3>
-            <p id="ai-response-text"></p>
-            <p class="text-sm text-gray-600 mt-4" id="ai-contact-prompt-container"></p>
-        </div>
-    </section>
-
-    <section id="about" class="py-12 bg-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6" data-lang-key="aboutUsTitle">عن سفر جو</h2>
-            <p class="text-base md:text-lg text-gray-700 max-w-3xl mx-auto" data-lang-key="aboutUsParagraph1">
-                "سفر جو" هي وكالة سفر رائدة مقرها الشارقة، الإمارات العربية المتحدة، متخصصة في تنظيم الرحلات السياحية المذهلة إلى أجمل الوجهات حول العالم. نحن نلتزم بتقديم تجارب سفر لا تُنسى، مع التركيز على الراحة، الفخامة، والخدمة الشخصية. فريقنا من الخبراء مستعد لمساعدتك في التخطيط لرحلتك القادمة، سواء كانت مغامرة فردية، عطلة عائلية، أو رحلة عمل.
-            </p>
-            <p class="text-base md:text-lg text-gray-700 max-w-3xl mx-auto mt-4" data-lang-key="aboutUsParagraph2">
-                نحن نؤمن بأن السفر يثري الروح ويوسع الآفاق، ولهذا نسعى جاهدين لتقديم باقات سفر متنوعة تلبي جميع الأذواق والميزانيات. انضم إلينا في رحلتك القادمة واكتشف جمال العالم مع "سفر جو"!
-            </p>
-        </div>
-    </section>
-
-    <section id="contact" class="py-12 bg-gray-100">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6" data-lang-key="contactUsTitle">هل أنت مستعد لرحلتك القادمة؟</h2>
-            <p class="text-base md:text-lg text-gray-700 mb-8" data-lang-key="contactUsSubtitle">تواصل معنا الآن لتحويل أحلامك إلى حقيقة! فريقنا المتخصص جاهز للإجابة على جميع استفساراتك وتصميم باقة سفر تناسب احتياجاتك تمامًا.</p>
-            <div class="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4 md:space-x-reverse">
-                <a href="tel:+971556422416" class="px-6 py-3 rounded-full text-base md:text-lg font-bold transition duration-300 flex items-center contact-info-item contact-button-phone">
-                    <i class="fas fa-phone-alt ml-2"></i>
-                    <span data-lang-key="callUs">اتصل بنا</span>: +971 556 422 416
-                </a>
-                <a href="mailto:info@safargo.com" class="px-6 py-3 rounded-full text-base md:text-lg font-bold transition duration-300 flex items-center contact-info-item contact-button-email">
-                    <i class="fas fa-envelope ml-2"></i>
-                    <span data-lang-key="emailUs">البريد الإلكتروني</span>: info@safargo.com
-                </a>
-                <a href="https://wa.me/971556422416" target="_blank" class="whatsapp-button text-base md:text-lg contact-info-item contact-button-whatsapp-main" data-lang-key="whatsappContact">
-                    <i class="fab fa-whatsapp whatsapp-icon"></i>
-                    تواصل عبر واتساب: +971 556 422 416
-                </a>
-            </div>
-            <p class="text-gray-600 text-sm mt-8" data-lang-key="headquarters">
-                المقر الرئيسي: الشارقة، الإمارات العربية المتحدة
-            </p>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-sm mb-4 md:mb-0" data-lang-key="copyright">&copy; 2025 سفر جو. جميع الحقوق محفوظة.</p>
-            <div class="flex space-x-4 space-x-reverse">
-                <a href="https://www.instagram.com/safar.trip?igsh=MTNuZ2ZqdW1qYzYyYQ%3D%3D&utm_source=qr"
-                   target="_blank" rel="noopener noreferrer"
-                   class="text-gray-400 hover:text-white transition duration-300 text-2xl">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                </div>
-        </div>
-    </footer>
-
-    <a href="https://wa.me/971556422416" target="_blank" class="floating-whatsapp-button">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    </div>
 
     <script>
-        // Translations object for multilingual support
-        const translations = {
-            ar: {
-                home: 'الرئيسية',
-                destinations: 'الوجهات',
-                about: 'عنا',
-                contact: 'اتصل بنا',
-                aiPlanner: 'مخطط الرحلات بالذكاء الاصطناعي',
-                heroTitle: 'اكتشف العالم مع سفر جو',
-                heroSubtitle: 'خطط لرحلتك المثالية معنا. مغامرات لا تُنسى في انتظارك!',
-                exploreButton: 'استكشف وجهاتنا',
-                ourDestinations: 'وجهاتنا المميزة',
-                europeTitle: 'أوروبا',
-                sochiTitle: 'سوتشي، روسيا',
-                sochiDesc: 'مدينة ساحلية جميلة على البحر الأسود، تشتهر بمنتجعاتها وشواطئها وحديقتها الأولمبية.',
-                parisTitle: 'باريس، فرنسا',
-                parisDesc: 'مدينة النور والرومانسية، برج إيفل، قوس النصر، متحف اللوفر.',
-                romeTitle: 'روما، إيطاليا',
-                romeDesc: 'مدينة التاريخ العظيم، الكولوسيوم، الفاتيكان.',
-                santoriniTitle: 'سانتوريني، اليونان',
-                santoriniDesc: 'جزر خلابة، مناظر غروب الشمس الساحرة من قرية أويا.',
-                londonTitle: 'لندن، المملكة المتحدة',
-                londonDesc: 'مدينة ملكية نابضة بالحياة، بيج بن، قصر باكنغهام.',
-                amsterdamTitle: 'أمستردام، هولندا',
-                amsterdamDesc: 'قنوات جميلة، متاحف عالمية، ثقافة فريدة.',
-                asiaTitle: 'آسيا',
-                azerbaijanTitle: 'أذربيجان',
-                azerbaijanDesc: 'باكو: مدينة الأضواء، أبراج اللهب، المدينة القديمة.',
-                malaysiaTitle: 'ماليزيا',
-                malaysiaDesc: 'كوالا لامبور - بينانج - لنكاوي: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.',
-                vietnamTitle: 'فيتنام',
-                vietnamDesc: 'هانوي - نينه بينه - سابا - خليج هالونغ: طيران دولي مباشر، فنادق فاخرة، إفطار يومي، جولات سياحية بسائق خاص، انتقالات المطار، شامل الضرائب والرسوم، خدمة عملاء على مدار الساعة.',
-                kazakhstanTitle: 'كازاخستان',
-                kazakhstanDesc: 'الماتي: مواصلات، طيران مباشر، إفطار يومي، فنادق، جولات سياحية.',
-                baliTitle: 'بالي، إندونيسيا',
-                baliDesc: 'جنة استوائية، شواطئ، معابد، غابات.',
-                turkeyTitle: 'اسطنبول، تركيا',
-                turkeyDesc: 'مزيج من الثقافات الشرقية والغربية، آيا صوفيا، البازار الكبير، البوسفور.',
-                turkeyPrice: 'تبدأ من 1800 درهم',
-                parisPrice: 'تبدأ من 2800 درهم',
-                dynamicPrice: 'تبدأ من ', // Placeholder for dynamic prices
-                additionalDestinationsTitle: 'وجهات إضافية',
-                aboutUsTitle: 'عن سفر جو',
-                aboutUsParagraph1: '"سفر جو" هي وكالة سفر رائدة مقرها الشارقة، الإمارات العربية المتحدة، متخصصة في تنظيم الرحلات السياحية المذهلة إلى أجمل الوجهات حول العالم. نحن نلتزم بتقديم تجارب سفر لا تُنسى، مع التركيز على الراحة، الفخامة، والخدمة الشخصية. فريقنا من الخبراء مستعد لمساعدتك في التخطيط لرحلتك القادمة، سواء كانت مغامرة فردية، عطلة عائلية، أو رحلة عمل.',
-                aboutUsParagraph2: 'نحن نؤمن بأن السفر يثري الروح ويوسع الآفاق، ولهذا نسعى جاهدين لتقديم باقات سفر متنوعة تلبي جميع الأذواق والميزانيات. انضم إلينا في رحلتك القادمة واكتشف جمال العالم مع "سفر جو"!',
-                contactUsTitle: 'هل أنت مستعد لرحلتك القادمة؟',
-                contactUsSubtitle: 'تواصل معنا الآن لتحويل أحلامك إلى حقيقة! فريقنا المتخصص جاهز للإجابة على جميع استفساراتك وتصميم باقة سفر تناسب احتياجاتك تمامًا.',
-                callUs: 'اتصل بنا',
-                emailUs: 'البريد الإلكتروني', // Shortened email text
-                whatsappContact: 'تواصل عبر واتساب',
-                headquarters: 'المقر الرئيسي: الشارقة، الإمارات العربية المتحدة',
-                copyright: '&copy; 2025 سفر جو. جميع الحقوق محفوظة.',
-                whatsappButton: 'تواصل عبر واتساب',
-                aiPlannerTitle: '✨خطط لرحلتك المثالية بالذكاء الاصطناعي✨',
-                aiPlannerSubtitle: 'أخبرنا عن أحلامك في السفر! ما هي اهتماماتك؟ ما هي ميزانيتك؟ وكم المدة التي تخطط لرحلتك؟ دع الذكاء الاصطناعي يقترح لك وجهة وأنشطة لا تُنسى.',
-                aiSuggestButton: '✨اقتراح رحلة✨',
-                aiLoading: 'جاري تجهيز رحلتك المثالية...',
-                aiResponseHeading: 'اقتراح رحلتك من سفر جو:',
-                aiContactPrompt: '<p style="text-align: center; margin-top: 1.5rem; font-size: 1.1rem; color: #0A1128;">هل أعجبك الاقتراح؟ <strong style="color: #1F4172;">تواصل معنا الآن عبر الواتساب</strong> لتحويل حلمك إلى حقيقة! <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline font-bold">اضغط هنا للدردشة المباشرة</a> أو اتصل على <span class="font-bold" style="font-size: 1.2em; white-space: nowrap;">+971 556 422 416</span>.</p>',
-                lowPriceMessage: 'عذراً، سفر جو ليس لديها أسعار بهذا السعر حالياً. يرجى التواصل معنا لمعرفة العروض المتاحة في الأيام القادمة.',
-            },
-            en: {
-                home: 'Home',
-                destinations: 'Destinations',
-                about: 'About Us',
-                contact: 'Contact Us',
-                aiPlanner: 'AI Trip Planner',
-                heroTitle: 'Discover the World with Safar Go',
-                heroSubtitle: 'Plan your perfect trip with us. Unforgettable adventures await!',
-                exploreButton: 'Explore Our Destinations',
-                ourDestinations: 'Our Featured Destinations',
-                europeTitle: 'Europe',
-                sochiTitle: 'Sochi, Russia',
-                sochiDesc: 'A beautiful coastal city on the Black Sea, famous for its resorts, beaches, and Olympic Park.',
-                parisTitle: 'Paris, France',
-                parisDesc: 'The City of Light and Romance, Eiffel Tower, Arc de Triomphe, Louvre Museum.',
-                romeTitle: 'Rome, Italy',
-                romeDesc: 'City of great history, Colosseum, Vatican City.',
-                santoriniTitle: 'Santorini, Greece',
-                santoriniDesc: 'Stunning islands, magical sunsets from Oia village.',
-                londonTitle: 'London, United Kingdom',
-                londonDesc: 'A vibrant royal city, Big Ben, Buckingham Palace.',
-                amsterdamTitle: 'Amsterdam, Netherlands',
-                amsterdamDesc: 'Beautiful canals, world-class museums, unique culture.',
-                asiaTitle: 'Asia',
-                azerbaijanTitle: 'Azerbaijan',
-                azerbaijanDesc: 'Baku: City of Lights, Flame Towers, Old City.',
-                malaysiaTitle: 'Malaysia',
-                malaysiaDesc: 'Kuala Lumpur - Penang - Langkawi: Direct international flights, luxury hotels, daily breakfast, private driver tours, airport transfers, taxes and fees included, 24/7 customer service.',
-                vietnamTitle: 'Vietnam',
-                vietnamDesc: 'Hanoi - Ninh Binh - Sapa - Halong Bay: Direct international flights, luxury hotels, daily breakfast, private driver tours, airport transfers, taxes and fees included, 24/7 customer service.',
-                kazakhstanTitle: 'Kazakhstan',
-                kazakhstanDesc: 'Almaty: Transportation, direct flights, daily breakfast, hotels, sightseeing tours.',
-                baliTitle: 'Bali, Indonesia',
-                baliDesc: 'A tropical paradise, beaches, temples, forests.',
-                turkeyTitle: 'Istanbul, Turkey',
-                turkeyDesc: 'A blend of Eastern and Western cultures, Hagia Sophia, Grand Bazaar, Bosphorus.',
-                turkeyPrice: 'Starting from 1800 AED',
-                parisPrice: 'Starting from 2800 AED',
-                dynamicPrice: 'Starting from ', // Placeholder for dynamic prices
-                additionalDestinationsTitle: 'Additional Destinations',
-                aboutUsTitle: 'About Safar Go',
-                aboutUsParagraph1: 'Safar Go is a leading travel agency based in Sharjah, UAE, specializing in organizing amazing tourist trips to the most beautiful destinations around the world. We are committed to providing unforgettable travel experiences, focusing on comfort, luxury, and personalized service. Our team of experts is ready to help you plan your next trip, whether it\'s a solo adventure, a family vacation, or a business trip.',
-                aboutUsParagraph2: 'We believe that travel enriches the soul and broadens horizons, which is why we strive to offer diverse travel packages that cater to all tastes and budgets. Join us on your next journey and discover the beauty of the world with "Safar Go"!',
-                contactUsTitle: 'Ready for Your Next Journey?',
-                contactUsSubtitle: 'Contact us now to turn your dreams into reality! Our specialized team is ready to answer all your inquiries and design a travel package that perfectly suits your needs.',
-                callUs: 'Call Us',
-                emailUs: 'Email', // Shortened email text
-                whatsappContact: 'Contact via WhatsApp',
-                headquarters: 'Headquarters: Sharjah, United Arab Emirates',
-                copyright: '&copy; 2025 Safar Go. All rights reserved.',
-                whatsappButton: 'Contact via WhatsApp',
-                aiPlannerTitle: '✨Plan Your Perfect Trip with AI✨',
-                aiPlannerSubtitle: 'Tell us about your travel dreams! What are your interests? What\'s your budget? How long do you plan to travel? Let AI suggest an unforgettable destination and activities for you.',
-                aiSuggestButton: '✨Suggest Trip✨',
-                aiLoading: 'Preparing your perfect trip...',
-                aiResponseHeading: 'Your Trip Suggestion from Safar Go:',
-                aiContactPrompt: '<p style="text-align: center; margin-top: 1.5rem; font-size: 1.1rem; color: #0A1128;">Did you like the suggestion? <strong style="color: #1F4172;">Contact us now via WhatsApp</strong> to turn your dream into reality! <a href="https://wa.me/971556422416" target="_blank" class="text-green-600 hover:underline font-bold">Click here to chat live</a> or call <span class="font-bold" style="font-size: 1.2em; white-space: nowrap;">+971 556 422 416</span>.</p>',
-                lowPriceMessage: 'Sorry, Safar Go does not currently have prices at this rate. Please contact us to inquire about future availability.',
+        // Get references to HTML elements for pages
+        const abdominalExercisesPage = document.getElementById('abdominalExercisesPage');
+        const calorieCalculatorPage = document.getElementById('calorieCalculatorPage');
+        const goToCalculatorBtn = document.getElementById('goToCalculatorBtn');
+        const goToAbdominalBtn = document.getElementById('goToAbdominalBtn');
+
+        // Get references to HTML elements for calorie calculator
+        const calorieForm = document.getElementById('calorieForm');
+        const resultsDiv = document.getElementById('results');
+        const bmrValue = document.getElementById('bmrValue');
+        const maintenanceValue = document.getElementById('maintenanceValue');
+        const mildLossValue = document.getElementById('mildLossValue');
+        const moderateLossValue = document.getElementById('moderateLossValue');
+        const severeLossValue = document.getElementById('severeLossValue');
+        const mildGainValue = document.getElementById('mildGainValue');
+        const bmiValue = document.getElementById('bmiValue');
+        const aiAdviceSection = document.getElementById('aiAdviceSection');
+        const aiLoading = document.getElementById('aiLoading');
+        const aiError = document.getElementById('aiError');
+        const aiAdviceContent = document.getElementById('aiAdviceContent');
+
+        // Function to show a specific page and hide others
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                if (page.id === pageId) {
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.add('hidden');
+                }
+            });
+        }
+
+        // Event listeners for page navigation buttons
+        goToCalculatorBtn.addEventListener('click', () => showPage('calorieCalculatorPage'));
+        goToAbdominalBtn.addEventListener('click', () => showPage('abdominalExercisesPage'));
+
+        // Initially show the abdominal exercises page
+        showPage('abdominalExercisesPage');
+
+        // Add event listener for calorie form submission
+        calorieForm.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Prevent default form submission (page reload)
+            
+            // Get input values from the calorie calculator form
+            const gender = document.getElementById('gender').value;
+            const age = parseFloat(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+            
+            // Calculate Basal Metabolic Rate (BMR) using Mifflin-St Jeor equation
+            // BMR: calories burned at rest to maintain basic bodily functions
+            let bmr;
+            if (gender === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             }
-        };
+            
+            // Calculate total daily energy expenditure (TDEE) based on activity level
+            const maintenance = bmr * activity; // Calories to maintain current weight
+            
+            // Calculate calorie targets for weight management
+            // Approximations based on 7700 calories per 1 kg of fat
+            const mildLoss = maintenance - 250; // ~0.25 kg/week loss
+            const moderateLoss = maintenance - 500; // ~0.5 kg/week loss
+            const severeLoss = maintenance - 1000; // ~1 kg/week loss (consult professional)
+            const mildGain = maintenance + 500; // ~0.5 kg/week gain
+            
+            // Calculate Body Mass Index (BMI)
+            // BMI = weight (kg) / (height (m))^2
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
 
-        let currentLang = 'ar'; // Default language is Arabic
+            // Display results
+            bmrValue.textContent = `${Math.round(bmr)} سعرة حرارية`;
+            maintenanceValue.textContent = `${Math.round(maintenance)} سعرة حرارية`;
+            mildLossValue.textContent = `${Math.round(mildLoss)} سعرة حرارية`;
+            moderateLossValue.textContent = `${Math.round(moderateLoss)} سعرة حرارية`;
+            severeLossValue.textContent = `${Math.round(severeLoss)} سعرة حرارية`;
+            mildGainValue.textContent = `${Math.round(mildGain)} سعرة حرارية`;
+            
+            // Display BMI with interpretation
+            let bmiInterpretation = '';
+            if (bmi < 18.5) {
+                bmiInterpretation = ' (نقص الوزن 📉)';
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                bmiInterpretation = ' (وزن صحي ✅)';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                bmiInterpretation = ' (زيادة الوزن ⚠️)';
+            } else {
+                bmiInterpretation = ' (سمنة 🚨)';
+            }
+            bmiValue.textContent = `${bmi.toFixed(2)}${bmiInterpretation}`;
 
-        // Function to update text content based on current language
-        function updateContent() {
-            document.querySelectorAll('[data-lang-key]').forEach(element => {
-                const key = element.getAttribute('data-lang-key');
-                if (translations[currentLang] && translations[currentLang][key]) {
-                    // Special handling for dynamic price tags and contact prompt as they have mixed content
-                    if (key === 'dynamicPrice') {
-                        // The price is already set dynamically, just prepend the translated text
-                        // We need to ensure the price is not reset on language toggle if it's already set
-                        if (element.dataset.currentPrice) { // Only update if a dynamic price has been set
-                            element.textContent = translations[currentLang][key] + element.dataset.currentPrice;
-                        }
-                    } else if (key === 'aiContactPrompt') {
-                        // This element's content is set by innerHTML, not textContent
-                        // It's also populated by the AI response, so only update if it has content
-                        // The AI response is dynamic, so we only update this if the AI response is visible
-                        if (!document.getElementById('ai-response-output').classList.contains('hidden')) {
-                             element.innerHTML = translations[currentLang][key];
-                        }
-                    }
-                    else {
-                        element.textContent = translations[currentLang][key];
-                    }
-                }
-            });
+            resultsDiv.classList.remove('hidden'); // Show results section
 
-            // Update directionality
-            document.documentElement.lang = currentLang;
-            document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.body.classList.remove('rtl', 'ltr');
-            document.body.classList.add(currentLang);
-
-            // Update language toggle button text
-            const langToggleButton = document.getElementById('lang-toggle');
-            langToggleButton.textContent = currentLang === 'ar' ? 'English' : 'العربية';
-        }
-
-        // --- Event Listeners ---
-
-        // Language Toggle
-        document.getElementById('lang-toggle').addEventListener('click', () => {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            setDynamicPrices(); // Re-set dynamic prices to update their prefix
-            updateContent();
-        });
-
-        // Mobile Menu Toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', () => {
-            const mainNav = document.getElementById('main-nav');
-            mainNav.classList.toggle('active');
-        });
-
-        // Dynamic Pricing for destination cards
-        function setDynamicPrices() {
-            const dynamicPriceElements = document.querySelectorAll('.price-tag.price-dynamic');
-            dynamicPriceElements.forEach(element => {
-                // Only generate a new random price if it hasn't been set before
-                if (!element.dataset.originalPrice) {
-                    // Generate a price between 1500 and 3500, ensuring it ends with 9
-                    const minPrice = 1500;
-                    const maxPrice = 3500;
-                    let randomPrice = Math.floor(Math.random() * ((maxPrice - 9 - minPrice) / 10 + 1)) * 10 + minPrice + 9;
-                    if (randomPrice > maxPrice) { // Adjust if it exceeds max after adding 9
-                        randomPrice = maxPrice - (maxPrice % 10) + 9;
-                        if (randomPrice > maxPrice) randomPrice -= 10;
-                    }
-                    element.dataset.currentPrice = `${randomPrice} درهم`; // Store the price in AED
-                }
-                // Update the text with the current language's prefix and stored price
-                element.textContent = translations[currentLang].dynamicPrice + element.dataset.currentPrice;
-            });
-        }
-
-        // AI Trip Planner functionality
-        document.getElementById('ai-suggest-button').addEventListener('click', async () => {
-            const tripInput = document.getElementById('ai-trip-input').value;
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const aiResponseOutput = document.getElementById('ai-response-output');
-            const aiResponseText = document.getElementById('ai-response-text');
-            const aiContactPromptContainer = document.getElementById('ai-contact-prompt-container');
-
-            // Clear previous response and show loading
-            aiResponseOutput.classList.add('hidden');
-            aiResponseText.textContent = '';
-            aiContactPromptContainer.innerHTML = ''; // Clear the contact prompt as well
-            loadingIndicator.classList.add('active');
-
-            // Determine the language for the AI prompt based on currentLang
-            const promptLanguage = currentLang === 'ar' ? 'Arabic' : 'English';
-
-            // Construct the prompt for the AI
-            // Added explicit instruction to ensure price is >= 1400 AED
-            const prompt = `As a travel agent for "Safar Go" based in Sharjah, UAE, suggest a personalized travel itinerary based on the following user preferences. Provide a concise and appealing response, including a suggested destination, 3-4 key activities/attractions, and a general price range. **Crucially, ensure the price is clearly stated in the format "Starting from X AED" (e.g., "Starting from 2500 AED") and that X is always 1400 or higher.** The response should be in ${promptLanguage}.
-
-User preferences: "${tripInput}"
-
-Structure your response clearly. Example:
-Suggested Destination: [City, Country]
-Activities:
-- [Activity 1]
-- [Activity 2]
-- [Activity 3]
-Price Range: [Starting from X AED]`;
+            // --- AI Advice Generation ---
+            // Clear previous AI advice and show loading spinner
+            aiAdviceContent.innerHTML = '';
+            aiError.classList.add('hidden');
+            aiLoading.classList.remove('hidden');
+            aiAdviceSection.classList.remove('hidden'); // Ensure AI section is visible
 
             try {
+                // Construct the prompt for the AI model
+                const prompt = `أنت خبير تغذية ولياقة بدنية. بناءً على المعلومات التالية، قدم نصائح شخصية وشاملة لنمط حياة صحي، مع التركيز على التغذية والتمارين الرياضية، بالإضافة إلى رسالة تحفيزية. اجعل النصائح مناسبة للشباب.
+                
+                معلومات المستخدم:
+                - الجنس: ${gender === 'male' ? 'ذكر' : 'أنثى'}
+                - العمر: ${age} سنة
+                - الوزن: ${weight} كجم
+                - الطول: ${height} سم
+                - مستوى النشاط: ${document.getElementById('activity').options[document.getElementById('activity').selectedIndex].text.split('(')[0].trim()} (معامل ${activity})
+                - مؤشر كتلة الجسم (BMI): ${bmi.toFixed(2)} ${bmiInterpretation}
+                - معدل الأيض الأساسي (BMR): ${Math.round(bmr)} سعرة حرارية
+                - سعرات الحفاظ على الوزن: ${Math.round(maintenance)} سعرة حرارية
+                - سعرات فقدان وزن خفيف (0.25 كجم/أسبوع): ${Math.round(mildLoss)} سعرة حرارية
+                - سعرات فقدان الوزن (0.5 كجم/أسبوع): ${Math.round(moderateLoss)} سعرة حرارية
+                - سعرات فقدان وزن سريع (1 كجم/أسبوع): ${Math.round(severeLoss)} سعرة حرارية
+                - سعرات زيادة الوزن (0.5 كجم/أسبوع): ${Math.round(mildGain)} سعرة حرارية
+
+                قدم نصائحك في الأقسام التالية:
+                1.  **نظرة عامة على صحتك:** تحليل موجز لوضعهم بناءً على BMI والسعرات الحرارية.
+                2.  **نصائح التغذية:** بناءً على سعرات الحفاظ على الوزن وفقدان/زيادة الوزن.
+                3.  **نصائح التمارين:** توصيات عامة للنشاط البدني.
+                4.  **رسالة تحفيزية:** تشجيع على الاستمرارية.
+                
+                اجعل الرد موجزًا وواضحًا ومقسمًا إلى نقاط باستخدام تنسيق Markdown.`;
+
+                // Prepare chat history for the API call
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                // The API key is provided by the Canvas environment at runtime when left as an empty string.
-                // Do NOT insert your actual API key here directly, as it will be exposed.
-                const apiKey = "AIzaSyAJDPRVIo91A7xHDV1T-VpvgP7sZkaIMCw";
+                const apiKey = ""; // API key will be provided by the Canvas environment
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
+                // Make the API call to Gemini
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                const result = await response.json(); // Parse the JSON response
 
-                const result = await response.json();
+                // Check if the response contains valid content
                 if (result.candidates && result.candidates.length > 0 &&
                     result.candidates[0].content && result.candidates[0].content.parts &&
                     result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-
-                    // Extract price from AI response using a more flexible regex
-                    const priceMatch = text.match(/(\d+)\s*AED/i); // Look for any number followed by AED
-                    let suggestedPrice = null;
-                    if (priceMatch && priceMatch[1]) {
-                        suggestedPrice = parseInt(priceMatch[1], 10);
-                    }
-
-                    // Check price condition (now 1400 AED)
-                    if (suggestedPrice !== null && suggestedPrice < 1400) {
-                        aiResponseText.textContent = translations[currentLang].lowPriceMessage;
-                    } else {
-                        aiResponseText.textContent = text;
-                    }
-                    // Always show the contact prompt after the AI response
-                    aiContactPromptContainer.innerHTML = translations[currentLang].aiContactPrompt;
-                    aiResponseOutput.classList.remove('hidden');
+                    const aiText = result.candidates[0].content.parts[0].text;
+                    aiAdviceContent.innerHTML = formatMarkdownToHtml(aiText); // Display AI advice
                 } else {
-                    aiResponseText.textContent = currentLang === 'ar' ? 'عذراً، لم أتمكن من إنشاء خطة رحلة. يرجى المحاولة مرة أخرى.' : 'Sorry, I could not generate a trip plan. Please try again.';
-                    aiResponseOutput.classList.remove('hidden');
+                    aiError.classList.remove('hidden'); // Show error if no content
+                    console.error('AI response structure unexpected:', result);
                 }
+
             } catch (error) {
-                console.error('Error generating trip plan:', error);
-                aiResponseText.textContent = currentLang === 'ar' ? 'حدث خطأ أثناء إنشاء خطة الرحلة. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.' : 'An error occurred while generating the trip plan. Please check your internet connection and try again.';
-                aiResponseOutput.classList.remove('hidden');
+                aiError.classList.remove('hidden'); // Show error on API call failure
+                console.error('Error fetching AI advice:', error);
             } finally {
-                loadingIndicator.classList.remove('active');
+                aiLoading.classList.add('hidden'); // Hide loading spinner
             }
         });
 
+        // Helper function to convert basic markdown to HTML for display
+        function formatMarkdownToHtml(markdownText) {
+            let html = markdownText;
+            // Convert bold text
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Convert headings (assuming ## or ### for simplicity, can be expanded)
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            // Convert lists
+            html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/^(?!<li|<\/li>)(.+)$/gim, '<p>$1</p>'); // Wrap remaining lines in paragraphs
 
-        // Initial setup on page load
-        window.onload = () => {
-            setDynamicPrices(); // Set initial dynamic prices
-            updateContent();    // Apply initial language (Arabic by default)
-        };
+            // Basic cleanup for markdown list conversion
+            html = html.replace(/<\/li>\n<li>/g, '</li><li>');
+            html = html.replace(/<\/ul><ul>/g, ''); // Prevent multiple ul tags if markdown has multiple lists
+
+            // Replace newlines with <br> for general text, but not inside block elements
+            html = html.replace(/(?<!<\/h[1-6]>)(?<!<\/li>)(?<!<\/p>)\n(?!<h[1-6]>)(?!<li>)(?!<p>)/g, '<br>');
+
+            return html;
+        }
     </script>
 </body>
 </html>
